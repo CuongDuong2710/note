@@ -1,0 +1,98 @@
+//create a new repository on the command line
+
+echo "# demo" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin https://github.com/CuongDuong2710/demo.git
+git push -u origin master
+
+//or push an existing repository from the command line
+
+git remote add origin https://github.com/CuongDuong2710/demo.git
+git push -u origin master
+
+*** the 'git remote' command manages all the remote connections from our current local repository to a remote or another repository someplace else on the internet.
+*** add has two parameters
+<1> origin: the name of the reference we want to create
+<2> is the full URL to the remote repository
+
+================================================
+43. Pushing changes to GitHub
+
+
+// <-u>: which is going to set up a tracking branch relationship between the master branch on the local repository 
+and the master branch on the remote repository
+// After '-u' parameter, we have the name of the remote repository
+// After the name of our remote repository, we need to provide the name of the branch we're going to push up 'master'
+ //'--tags' flag to send all the tags
+
+$ git push -u origin master --tags
+Counting objects: 44, done.
+Delta compression using up to 32 threads.
+Compressing objects: 100% (36/36), done.
+Writing objects: 100% (44/44), 4.10 KiB | 0 bytes/s, done.
+Total 44 (delta 11), reused 0 (delta 0)
+remote: Resolving deltas: 100% (11/11), done.
+To https://github.com/CuongDuong2710/demo.git
+ * [new branch]      master -> master
+ * [new tag]         v1.0 -> v1.0
+Branch master set up to track remote branch master from origin.
+
+// When we do pushes in the future, the "-u" will no longer be required
+
+$ git remote -v
+origin  https://github.com/CuongDuong2710/demo.git (fetch)
+origin  https://github.com/CuongDuong2710/demo.git (push)
+
+================================================
+SSH Authentication
+47. Generating an SSH key
+
+// Users/QUOC CUONG
+$ ls .ssh
+ls: cannot access '.ssh': No such file or directory
+
+$ mkdir .ssh
+
+// '-t': type, '-C': common name
+// id_rsa.pub for public key
+
+$ ssh-keygen -t rsa -C "cuongduongngocquoc@gmail.com"
+Generating public/private rsa key pair.
+Enter file in which to save the key (/c/Users/QUOC CUONG/.ssh/id_rsa):
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in /c/Users/QUOC CUONG/.ssh/id_rsa.
+Your public key has been saved in /c/Users/QUOC CUONG/.ssh/id_rsa.pub.
+The key fingerprint is:
+SHA256:ZaUy5kUWcc/wd+RfHKbsC5eimaUXPJTvXJcc/Pbf9tk cuongduongngocquoc@gmail.com
+The key's randomart image is:
++---[RSA 2048]----+
+|          =o+  o.|
+|         o +o=++.|
+|        + =o o+o*|
+|       o *o o o.B|
+|        S  B = +=|
+|          * O o.o|
+|         = . +  .|
+|          .     *|
+|               oE|
++----[SHA256]-----+
+
+
+================================================
+48. Verify SSH Authentication with GitHub
+
+// copy all
+$ notepad id_rsa.pub
+
+// create new SSH key in your setting GitHub and paste
+// and then connect GitHub with SSH
+$ ssh -T git@github.com
+Enter passphrase for key '/c/Users/QUOC CUONG/.ssh/id_rsa':
+Hi CuongDuong2710! You've successfully authenticated, but GitHub does not provide shell access.
+
+================================================
+
+

@@ -1,0 +1,122 @@
+Setup the Project Folder
+
+pwd
+mkdir projects
+cd projects
+pwd
+
+===================================
+Git configuration
+
+git version
+git config --global user.name <username>
+git config --global user.email <password>
+git config --global init
+
+===================================
+Copy the Repository (clone)
+
+git clone <url-of-repository-as-HTTPS-or-SSH>
+
+===================================
+First Commit
+
+echo "Test Git demo" >> start.txt
+cat start.txt
+git add start.txt
+git commit -m "Adding start text file"
+git status
+
+===================================
+Publishing Changes to GitHub (push)
+
+git push origin master
+
+===================================
+
+// list all files and 'read', 'write'
+ls -l
+
+// remove folder, repository
+rm -rf <name-of-folder>
+rm -rf <name-of-repository>
+
+//that will list all files including hidden files
+$ ls -al
+
+// all files being tracked
+$ git ls-files
+
+===================================
+Create new repository locally
+
+$ git init <name-of-project>
+
+// or cd <name-of-project>
+$ git init
+
+// or <.> is current folder
+
+$ git init .
+
+// <.> add all files in folder to staging area (demo)
+
+$ git add .
+
+// or for simply having deletions, -u which stands for update
+$ git add -u
+
+===================================
+LOG
+
+$ git log
+$ git show
+
+===================================
+Add new file
+
+$ touch new.file
+
+===================================
+Express commit
+
+// <-a> parameter tells Git to first add modified files to the Git staging area and then directly proceed to committing
+$ git commit -am "Updating README"
+
+===================================
+Create an alias
+
+$ git config --global alias.hist "log --oneline --graph --decorate --all"
+
+$ git hist
+
+===================================
+Rename and delete files
+
+// Rename
+$ git mv <old-name> <new-name>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Copy file or folder
+// bash cmd <cp -R> for recursive, copy over all the files.
+// <~>: which references my user's home directory
+// Downloads/initializr/* that means everything under 'initializr' folder
+// The first path is the source location, and then the dot is the destination which represents the current folder
+
+QUOC CUONG@QUOCCUONG MINGW64 ~/projects/website (master)
+$ cp -R ~/Downloads/initializr/* .
+

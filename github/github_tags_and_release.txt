@@ -1,0 +1,218 @@
+Tags is forgotten but they can play a larger role in the life of your project.
++ Mark Project Milestones or Event
++ Release notes on GitHub and provide links to download archives of our project
+
+================================================
+79. Local Tags (a bit of Review)
+
+$ git log --oneline
+
+***// without any parameters will list tags if they are available in our repository
+$ git tag
+
+***// Lightweigh tags to point to the HEAD position on the current branches for 'develop' and 'master' respectively
+$ git tag unstable develop
+
+$ git tag stable master
+
+$ git tag
+stable
+unstable
+
+
+$ git hist
+*   29efa7b (HEAD -> develop, tag: unstable, origin/develop, origin/HEAD) resolving conflict with unique approach
+|\
+| * a5c2871 Problematic changes from GitHub
+* | 9a10164 Updating README with malice on local side
+|/
+*   8e99965 Merge pull request #3 from CuongDuong2710/just-a-demo
+|\
+| * 5839316 Quick update of README
+|/
+*   6a38a44 (tag: stable, origin/master, master) Merge branch 'master' of github.com:CuongDuong2710/website
+|\
+| * 176f64d Update README 2nd
+* | 098017b Updating index.html 2nd
+|/
+* 3c62eaf Updating index.html locally before rebase
+
+// Create annotated tags on commit id 'fd84479'
+$ git tag -a v0.1-alpha -m "Release 0.1 (Alpha)" fd84479
+
+// show tag
+$ git show v0.1-alpha
+tag v0.1-alpha
+Tagger: CuongDuong2710 <cuongduongngocquoc@gmail.com>
+Date:   Thu Aug 3 17:30:53 2017 +0700
+
+Release 0.1 (Alpha)
+
+commit fd844795f2d1d0619f9b69b70ab66afe4d7b4fba
+Author: Cuong Duong <cuongduongngocquoc@gmail.com>
+Date:   Tue Aug 1 09:54:13 2017 +0700
+
+    Create new demo file
+
+diff --git a/css/demo.txt b/css/demo.txt
+new file mode 100644
+index 0000000..0527e6b
+--- /dev/null
++++ b/css/demo.txt
+@@ -0,0 +1 @@
++This is a test
+
+$ git tag -a v0.2-alpha -m "Release 0.2 (Alpha)" 1ecbe30
+
+$ git tag -a v0.3-beta -m "Release 0.3 (Beta)" 8fec8b1
+
+$ git tag
+stable
+unstable
+v0.1-alpha
+v0.2-alpha
+v0.3-beta
+
+================================================
+80. Pushing Local Tags to GitHub
+
+*** IMPORTANT// Before we work with our remote repository, let's make sure we've received all the updates from GitHub before moving forward: "git pull"
+
+$ git pull
+Already up-to-date.
+
+***IMPORTANT// Now, to send all our commits that we currently have on our local repository back up to GitHub
+
+$ git push
+Everything up-to-date
+
+***// Push local tags
+$ git push origin stable
+Total 0 (delta 0), reused 0 (delta 0)
+To github.com:CuongDuong2710/website.git
+ * [new tag]         stable -> stable
+
+
+***// Push all local tags with option '--tags'
+$ git push --tags
+Counting objects: 3, done.
+Delta compression using up to 32 threads.
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 474 bytes | 0 bytes/s, done.
+Total 3 (delta 0), reused 0 (delta 0)
+To github.com:CuongDuong2710/website.git
+ * [new tag]         unstable -> unstable
+ * [new tag]         v0.1-alpha -> v0.1-alpha
+ * [new tag]         v0.2-alpha -> v0.2-alpha
+ * [new tag]         v0.3-beta -> v0.3-beta
+ 
+ 
+================================================
+82. Deleting Tags on GitHub
+
+// Delete tags 'v0.1-alpha' on GitHub
+
+// that will fetch all the current references just to make sure that I'm in sync with GitHub
+$ git fetch -p
+
+***//
+$ git tag -d v0.1-alpha
+Deleted tag 'v0.1-alpha' (was c1b5d1e)
+
+// tag 'v0.1-alpha' is no longer
+$ git tag
+stable
+unstable
+v0.2-alpha
+v0.3-beta
+
+$ git tag -d v0.2-alpha
+Deleted tag 'v0.2-alpha' (was 8d79ccd)
+
+// Delete tag 'v0.2-alpha' on GitHub by command line at local
+$ git push origin :v0.2-alpha
+To github.com:CuongDuong2710/website.git
+ - [deleted]         v0.2-alpha
+
+ 
+================================================
+83. Updating Tags: Creating a Floating Tags 
+
+$ notepad README.md
+
+$ git commit -am "Updating README with purpose section"
+
+$ git push
+
+// Notice that tag 'unstable' is behind last commit
+
+$ git log --oneline --decorate
+63bb413 (HEAD -> develop, origin/develop, origin/HEAD) Updating README with purpose section
+29efa7b (tag: unstable) resolving conflict with unique approach
+
+***// Update tag 'unstable' point to last commit at local
+$ git tag -f unstable 63bb413
+Updated tag 'unstable' (was 29efa7b)
+
+$ git log --oneline --decorate
+63bb413 (HEAD -> develop, tag: unstable, origin/develop, origin/HEAD) Updating README with purpose section
+29efa7b resolving conflict with unique approach
+
+***// Update tag 'unstable' at GitHub
+=>
+unstable
+@CuongDuong2710 tagged this 8 hours ago · 1 commit to develop since this tag
+
+$ git push
+Everything up-to-date
+
+$ git pull
+Already up-to-date.
+
+$ git push origin develop
+Everything up-to-date
+
+$ git push origin unstable
+To github.com:CuongDuong2710/website.git
+ ! [rejected]        unstable -> unstable (already exists)
+error: failed to push some refs to 'git@github.com:CuongDuong2710/website.git'
+hint: Updates were rejected because the tag already exists in the remote.
+
+// use option '--force'
+$ git push --force origin unstable
+Total 0 (delta 0), reused 0 (delta 0)
+To github.com:CuongDuong2710/website.git
+ + 29efa7b...63bb413 unstable -> unstable (forced update)
+
+=> there's no message saying that we're behind or ahead of develop
+unstable
+@CuongDuong2710 tagged this 7 minutes ago
+
+================================================
+86. Updating Tags: Creating a Floating Tags 
+$ git pull
+From github.com:CuongDuong2710/website
+ * [new tag]         v1.0       -> v1.0
+Already up-to-date.
+
+
+================================================
+SECTION 11 - Comparing Differences
+
+_ Use 'New Pull Request' to compare:
+"Branches, tags, commit ranges, and time ranges. In the same repository and across forks."
+
+// 2 days ago
+master@{2days} 
+
+//yyyy-mm-dd
+master@{2017-08-03} 
+
+// HEAD position at 3
+HEAD@{3} 
+
+// HEAD - 1
+HEAD^ 
+
+
+

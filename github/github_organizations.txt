@@ -1,0 +1,77 @@
+Lecture 118. Updating Remote References on the Local side
+
+1. Transfer 'website' repository to 'my-organization-demo' organization (organization level).
+2. Fork to individual account (individual level).
+3. Third one on our local system.
+
+// Make sure this references the organization's version of the repository and not the one that's on your personal account
+
+$ git remote add upstream git@github.com:my-organization-demo/website.git
+
+$ git remote -v
+origin  git@github.com:CuongDuong2710/website.git (fetch)
+origin  git@github.com:CuongDuong2710/website.git (push)
+upstream        git@github.com:my-organization-demo/website.git (fetch)
+upstream        git@github.com:my-organization-demo/website.git (push)
+
+// we have both 'origin' and 'upstream' specified, and they point to the 'website' repository on the personal account and the organization account respectively.
+
+$ git fetch upstream
+From github.com:my-organization-demo/website
+ * [new branch]      develop    -> upstream/develop
+ * [new branch]      master     -> upstream/master
+
+// Fetch from all the remote references at one time 
+$ git fetch --all
+Fetching origin
+Fetching upstream
+
+$ git branch -a
+* develop
+  master
+  remotes/origin/HEAD -> origin/develop
+  remotes/origin/develop
+  remotes/origin/master
+  remotes/upstream/develop
+  remotes/upstream/master
+
+
+===================================================================
+Lecture 119. Branches and Confusion
+
+// Create new 'shared' branch on 'website' repository both personal account and organization account
+
+$ git fetch --all
+Fetching origin
+From github.com:CuongDuong2710/website
+ * [new branch]      shared     -> origin/shared
+Fetching upstream
+From github.com:my-organization-demo/website
+ * [new branch]      shared     -> upstream/shared
+
+$ git branch -a
+* develop
+  master
+  remotes/origin/HEAD -> origin/develop
+  remotes/origin/develop
+  remotes/origin/master
+  remotes/origin/shared
+  remotes/upstream/develop
+  remotes/upstream/master
+  remotes/upstream/shared
+
+***IMPORTANT// We have 'shared' in both 'origin' and 'upstream'. So it could have matched one of those, but Git doesn't work that way.   
+$ git checkout shared
+error: pathspec 'shared' did not match any file(s) known to git.
+
+// <-b> new branch, <nameofbranch> and <startingpoint>
+
+$ git checkout -b shared origin/shared
+Switched to a new branch 'shared'
+Branch shared set up to track remote branch shared from origin.
+
+$ git pull
+Already up-to-date.
+
+
+

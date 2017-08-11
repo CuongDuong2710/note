@@ -1,0 +1,146 @@
+SECTION 12: SOCIAL CODING
+
+93. Copying a GitHub Repository by Forking
+
+// Copy a GitHub Repository by Forking
+// And clone this repository to local
+
+$ git clone git@github.com:CuongDuong2710/starter-web.git
+
+$ ls
+github-demo/  pj/  starter-web/  web-project/  website/
+
+$ cd starter-web/
+
+
+===============================================
+94. Creating Branch on Your Fork
+
+// create new branch 'feature-readme'
+$ git checkout -b feature-readme
+Switched to a new branch 'feature-readme'
+
+$ git status
+On branch feature-readme
+nothing to commit, working tree clean
+
+//set up the tracking relationship, origin is the name of our remote repository
+$ git push -u origin feature-readme
+Total 0 (delta 0), reused 0 (delta 0)
+To github.com:CuongDuong2710/starter-web.git
+ * [new branch]      feature-readme -> feature-readme
+Branch feature-readme set up to track remote branch feature-readme from origin.
+
+===============================================
+95. Pull Request
+
+// Submit a pull request to contribute our changes to our upstream repository 'starter-web'
+
+// A pull request is the request from the upstream repository to pull in your changes
+
+QUOC CUONG@QUOCCUONG MINGW64 ~/projects/starter-web (feature-readme)
+$ notepad README.md
+
+$ git add .
+
+$ git commit -m "My edition"
+
+$ git push origin feature-readme
+
+// Create a pull request
+
+===============================================
+97. Accepting Pull Request
+
+// upstream repository 'starter-web' accept pull request from 'feature-readme'
+===============================================
+99. Synchronize Changes Back to Your Fork
+
+// scm-ninja/starter-web have 'README.md' file
+// CuongDuong2710/starter-web do not have 'README.md' file
+
+=> synchronize our upstream repository from which we forked down to our individual copy of our repository.
++ No direct way from GitHub interface
++ Use command line
+
+QUOC CUONG@QUOCCUONG MINGW64 ~/projects/starter-web (master)
+$ git remote -v
+origin  git@github.com:CuongDuong2710/starter-web.git (fetch)
+origin  git@github.com:CuongDuong2710/starter-web.git (push)
+
+*** IMPORTANT// add remote from upstream 'scm-ninja/starter-web'
+$ git remote add upstream https://github.com/scm-ninja/starter-web.git
+
+$ git remote -v
+origin  git@github.com:CuongDuong2710/starter-web.git (fetch)
+origin  git@github.com:CuongDuong2710/starter-web.git (push)
+upstream        https://github.com/scm-ninja/starter-web.git (fetch)
+upstream        https://github.com/scm-ninja/starter-web.git (push)
+
+
+*** IMPORTANT// and then pull to local master by 'upstream'
+
+QUOC CUONG@QUOCCUONG MINGW64 ~/projects/starter-web (master)
+$ git pull upstream master
+From https://github.com/scm-ninja/starter-web
+ * branch            master     -> FETCH_HEAD
+ * [new branch]      master     -> upstream/master
+Already up-to-date.
+
+// list and local master have 'README.md'
+$ ls -l
+
+*** IMPORTANT// and since our local repository has the changes that we just got from upstream, but our individual fork of the repository on GitHub does not have that.
+// We need to push our changes from our local repository to our individual fork
+
+$ git push origin master
+
+===============================================
+100. Enlisting Help with Collaborators
+
+_ Select repo -> Settings -> Colloaborators: add username to contribute repository (read, write, accept pull request...)
+
+
+===============================================
+SECTION 13 GitHub Issues
+
+Lecture 107. Associating Issues with Commits
+
+$ notepad .gitignore
+
+// Add 'close' and number '#5' same as issues on GitHub
+$ git commit -am "Ignore Mac OS temp files, close #5"
+
+// on GitHub automatically close issues #5
+$ git push
+
+
+Lecture 108. Using Mentions with Issues
+
+// Go to 'commits' tab on 'website' repository. Click into commit id is associated with issues '#<number>'.
+// Then comment with mention "#<number>" with issues. So we know that issues is associated with which commit id.
+
+
+===============================================
+SECTION 14 GitHub Issues
+
+Lecture 111 Working with Gits Locally
+
+// Create 2 new files gists .bash_profile and .bashrc
+
+// clone 2 files into 'my-gist' folder at local
+$ git clone git@gist.github.com:4af181ca4b0832f53b4636f5e0de8dae.git my-gist
+
+
+QUOC CUONG@QUOCCUONG MINGW64 ~/projects/my-gist (master)
+$ notepad .bash_profile
+$ notepad .bashrc
+
+*** IMPORTANT//
+$ git add .bash*
+
+$ git commint -m "Adding comments to files"
+
+$ git push origin master
+
+

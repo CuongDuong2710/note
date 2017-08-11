@@ -1,0 +1,376 @@
+================================================
+69. Local Branches
+
+***// create new local branch and remove lipsum.txt file
+$ git checkout -b remove-ipsum
+Switched to a new branch 'remove-ipsum'
+
+$ git rm lipsum.txt
+rm 'lipsum.txt'
+
+$ git status
+On branch remove-ipsum
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        deleted:    lipsum.txt
+
+$ git commit -m "Removing ipsum file"
+[remove-ipsum 813cd7c] Removing ipsum file
+ 1 file changed, 1 deletion(-)
+ delete mode 100644 lipsum.txt
+
+$ git status
+On branch remove-ipsum
+nothing to commit, working tree clean
+
+$ git push -u origin remove-ipsum
+Counting objects: 2, done.
+Delta compression using up to 32 threads.
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (2/2), 237 bytes | 0 bytes/s, done.
+Total 2 (delta 1), reused 0 (delta 0)
+remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+To github.com:CuongDuong2710/website.git
+ * [new branch]      remove-ipsum -> remove-ipsum
+Branch remove-ipsum set up to track remote branch remove-ipsum from origin.
+
+================================================
+71. Merging locally
+
+// check status 'remove-ipsum' branch
+$ git status
+On branch remove-ipsum
+Your branch is up-to-date with 'origin/remove-ipsum'.
+nothing to commit, working tree clean
+
+// switch 'master' branch
+$ git checkout master
+Switched to branch 'master'
+Your branch is up-to-date with 'origin/master'.
+
+// pull before merge
+$ git pull
+Already up-to-date.
+
+*** // merge with 'remove-ipsum' branch
+$ git merge remove-ipsum
+Removing lipsum.txt
+Merge made by the 'recursive' strategy.
+ lipsum.txt | 1 -
+ 1 file changed, 1 deletion(-)
+ delete mode 100644 lipsum.txt
+
+// check status
+ $ git status
+On branch master
+Your branch is ahead of 'origin/master' by 2 commits.
+  (use "git push" to publish your local commits)
+nothing to commit, working tree clean
+
+// push changes
+$ git push
+Enter passphrase for key '/c/Users/QUOC CUONG/.ssh/id_rsa':
+Counting objects: 2, done.
+Delta compression using up to 32 threads.
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (2/2), 275 bytes | 0 bytes/s, done.
+Total 2 (delta 1), reused 0 (delta 0)
+remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+To github.com:CuongDuong2710/website.git
+   1e8bbe2..c5f6709  master -> master
+
+// swith to 'remove-ipsum' branch in Github
+// This branch is 3 commits behind master. Because this branch doesn't have the changes from the example branch that was integrated into master already
+// remove this branch
+
+// in local, 'remove-ipsum' branch is sill longer
+QUOC CUONG@QUOCCUONG MINGW64 ~/projects/website (master)
+$ git branch -a
+* master
+  remove-ipsum
+  remotes/origin/HEAD -> origin/master
+  remotes/origin/master
+  remotes/origin/remove-ipsum
+
+$ git branch -d remove-ipsum
+Deleted branch remove-ipsum (was 813cd7c).
+
+// we still have the 'origin/remove-ipsum' branch referenced on origin
+$ git branch -a
+* master
+  remotes/origin/HEAD -> origin/master
+  remotes/origin/master
+  remotes/origin/remove-ipsum
+  
+// However, we know that that branch doesn't exist on Github. It's just a stale reference. So, we need to update those stale references.
+
+<-p>: prune option, which means it's going to look for any dead branches and remove those references
+
+$ git fetch -p
+From github.com:CuongDuong2710/website
+ - [deleted]         (none)     -> origin/remove-ipsum
+ 
+ 
+================================================
+72. Locally switch to a Branch on Github
+
+// Create new branch 'update-readme' on GitHub and add new line
+
+// Local check status of 'master' and fetch
+QUOC CUONG@QUOCCUONG MINGW64 ~/projects/website (master)
+$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+nothing to commit, working tree clean
+
+$ git branch -a
+* master
+  remotes/origin/HEAD -> origin/master
+  remotes/origin/master
+
+***// fetch new references 'origin/update-readme'
+$ git fetch
+remote: Counting objects: 3, done.
+remote: Compressing objects: 100% (3/3), done.
+remote: Total 3 (delta 1), reused 0 (delta 0), pack-reused 0
+Unpacking objects: 100% (3/3), done.
+From github.com:CuongDuong2710/website
+ * [new branch]      update-readme -> origin/update-readme
+
+$ git branch -a
+* master
+  remotes/origin/HEAD -> origin/master
+  remotes/origin/master
+  remotes/origin/update-readme
+
+// Although at local, 'update-readme' doesn't create. Git will search on Github and create.
+$ git checkout update-readme
+Switched to a new branch 'update-readme'
+Branch update-readme set up to track remote branch update-readme from origin.
+
+// Modify 'README.md'
+
+$ git commit -am "More tweaks to README"
+
+$ git push
+
+=> at Github, file 'README.md' will be updated same as locally
+
+================================================
+73. Cleaning up by deleting branches and references
+// Open config git
+$ git config --global -e
+
+// pull all branches
+$ git pull --all
+
+$ git merge update-readme
+
+// delete
+$ git branch -d update-readme
+
+// still have reference 'origin/update-readme'
+$ git branch -a
+* master
+  remotes/origin/HEAD -> origin/master
+  remotes/origin/master
+  remotes/origin/update-readme
+
+// delete 'update-readme' branch at Github <origin :update-readme> not use <-p> prune option
+$ git push origin :update-readme
+To github.com:CuongDuong2710/website.git
+ - [deleted]         update-readme
+ 
+================================================
+74. Pull with Rebase
+
+// This is a good strategy when you're working on something, and you want to make sure that your changes are ahead of whatever's going on from the remote site.
+
+// First, edit 'README.md' in remote Github and commit
++++ "Updates made on master on GitHub before rebase"
+
+// then modify index.html in local
+$ notepad index.html
+
+$ git commit -am "Updating index.html locally before rebase"
+
+// fetch
+$ git fetch
+remote: Counting objects: 3, done.
+remote: Compressing objects: 100% (3/3), done.
+remote: Total 3 (delta 1), reused 0 (delta 0), pack-reused 0
+Unpacking objects: 100% (3/3), done.
+From github.com:CuongDuong2710/website
+   8fec8b1..e2eee1c  master     -> origin/master
+
+// notice that  local branch and 'origin/master'  have diverged
+$ git status
+On branch master
+Your branch and 'origin/master' have diverged,
+and have 1 and 1 different commits each, respectively.
+  (use "git pull" to merge the remote branch into yours)
+nothing to commit, working tree clean
+
+// Show graph, realize local branch and 'origin/master' have diverged
+$ git hist
+* ec4b3e2 (HEAD -> master) Updating index.html locally before rebase
+| * e2eee1c (origin/master, origin/HEAD) Readme updated on master on GitHub befor Rebase
+|/
+* 8fec8b1 More tweaks to README
+* 30218e6 Tweeked readme
+*   c5f6709 Merge branch 'remove-ipsum'
+|\
+| * 813cd7c Removing ipsum file
+* |   1e8bbe2 Merge pull request #2 from CuongDuong2710/example
+|\ \
+| |/
+|/|
+| * 4134d49 Updating readme from branch example
+|/
+* ff117ce Delete demo file
+
+
+
+***// IMPORTANT: it's first rewinding the local branch, then it brings our changes from GitHub, 
+// and then it applies any commits that we had on the local branch.
+
+git pull --rebase
+First, rewinding head to replay your work on top of it...
+Applying: Updating index.html locally before rebase
+
+// check it out
+$ git hist
+* 3c62eaf (HEAD -> master) Updating index.html locally before rebase
+* e2eee1c (origin/master, origin/HEAD) Readme updated on master on GitHub befor Rebase
+* 8fec8b1 More tweaks to README
+* 30218e6 Tweeked readme
+*   c5f6709 Merge branch 'remove-ipsum'
+|\
+| * 813cd7c Removing ipsum file
+* |   1e8bbe2 Merge pull request #2 from CuongDuong2710/example
+|\ \
+| |/
+|/|
+| * 4134d49 Updating readme from branch example
+|/
+* ff117ce Delete demo file
+
+// And finally, push all changes from local to remote
+$ git push
+
+
+***// COMPARE if not rebase, Git isn't rewinding the local branch
+$ git hist
+*   6a38a44 (HEAD -> master) Merge branch 'master' of github.com:CuongDuong2710/website
+|\
+| * 176f64d (origin/master, origin/HEAD) Update README 2nd
+* | 098017b Updating index.html 2nd
+|/
+* 3c62eaf Updating index.html locally before rebase
+* e2eee1c Readme updated on master on GitHub befor Rebase
+* 8fec8b1 More tweaks to README
+* 30218e6 Tweeked readme
+*   c5f6709 Merge branch 'remove-ipsum'
+|\
+| * 813cd7c Removing ipsum file
+* |   1e8bbe2 Merge pull request #2 from CuongDuong2710/example
+|\ \
+| |/
+|/|
+| * 4134d49 Updating readme from branch example
+|/
+* ff117ce Delete demo file
+
+================================================
+76. Setting Default Branch
+
+// In some work flows, the master branch represents what's currently in production and active development SHOULD NOT happen on the master branch directly.
+// Instead, there should be another branch that is also long-lived, where all the development effort goes, and then, periodically, those changes are merged back into master.
+// Create new branch 'develop' and set is default branch in Settings on GitHub
+
+// delete 'website' repository in local
+QUOC CUONG@QUOCCUONG MINGW64 ~/projects
+$ rm -rf website/
+
+// re-clone, now 'develop' is the default branch
+$ git clone git@github.com:CuongDuong2710/website.git
+
+QUOC CUONG@QUOCCUONG MINGW64 ~/projects/website (develop)
+$ git branch -a
+* develop
+  remotes/origin/HEAD -> origin/develop
+  remotes/origin/develop
+  remotes/origin/master
+
+// there was no master branch on our local system. Git went out to our remote, origin, and brought in the 'origin/master' branch and set that up as our local master branch.
+$ git checkout master
+
+$ git branch -a
+  develop
+* master
+  remotes/origin/HEAD -> origin/develop
+  remotes/origin/develop
+  remotes/origin/master
+  
+================================================
+77. Dealing with a Conflict while Pulling
+
+// Modify 'README.md' on GitHub remote and commit
+$ git checkout develop
+
+$ git fetch
+
+// local is not updated with remote's changes
+$ git status
+On branch develop
+Your branch is behind 'origin/develop' by 1 commit, and can be fast-forwarded.
+  (use "git pull" to update your local branch)
+nothing to commit, working tree clean
+
+// edit 'README.md' on local
+$ notepad README.md
+
+$ git commit -am "Updating README with malice on local side"
+
+$ git status
+On branch develop
+Your branch and 'origin/develop' have diverged,
+and have 1 and 1 different commits each, respectively.
+  (use "git pull" to merge the remote branch into yours)
+nothing to commit, working tree clean
+
+***// Conflict
+
+$ git pull
+Auto-merging README.md
+CONFLICT (content): Merge conflict in README.md
+Automatic merge failed; fix conflicts and then commit the result.
+
+// Fix conflict 'develop|MERGING'
+QUOC CUONG@QUOCCUONG MINGW64 ~/projects/website (develop|MERGING)
+$ git mergetool
+
+QUOC CUONG@QUOCCUONG MINGW64 ~/projects/website (develop|MERGING)
+$ git commit -m "resolving conflict with unique approach"
+
+// do not have 'develop|MERGING'
+QUOC CUONG@QUOCCUONG MINGW64 ~/projects/website (develop)
+$ git status
+On branch develop
+Your branch is ahead of 'origin/develop' by 2 commits.
+  (use "git push" to publish your local commits)
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        README.md.orig
+
+nothing added to commit but untracked files present (use "git add" to track)
+
+$ rm *.orig
+
+$ git push
+
+
+
+

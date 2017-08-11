@@ -1,0 +1,532 @@
+****************************************************************
+29. Comparing differences
+
+// Install p4merge and config in github
+
+$ git config --global diff.tool p4merge
+$ git config --global difftool.p4merge.path 'C:\Program Files\Perforce\p4merge.exe'
+
+$ git config --global merge.tool p4merge
+$ git config --global mergetool.p4merge.path 'C:\Program Files\Perforce\p4merge.exe'
+
+//Editing the global configuration file
+
+~/.gitconfig (git config --global --edit)
+
+// history commit
+$ git hist
+* 030099c (HEAD -> master) Adding ignore file
+* 799308a remove myfile.txt
+* ea24b70 rename and add
+* 024d48c deleting demo file
+* 2b20364 renaming example
+* bf06da2 adding example file
+* 65c57f7 Updating README
+* 414a21c adding both a README and a LICENSE file to the repo
+
+// diff by id commit
+$ git diff 65c57f7 HEAD
+diff --git a/.gitignore b/.gitignore
+new file mode 100644
+index 0000000..bf0824e
+--- /dev/null
++++ b/.gitignore
+@@ -0,0 +1 @@
++*.log
+\ No newline at end of file
+diff --git a/LICENSE.md b/LICENSE.txt
+similarity index 100%
+rename from LICENSE.md
+rename to LICENSE.txt
+
+// difftool
+$ git difftool 65c57f7 HEAD
+
+$ git help diff
+
+****************************************************************
+32. Simple branching example
+
+// show all branch
+$ git branch
+* master
+
+// switch new branch
+$ git checkout -b updates
+Switched to a new branch 'updates'
+M       README.md
+
+// check new branch 'updates' with ls
+QUOC CUONG@QUOCCUONG MINGW64 ~/projects/pj/demo (updates)
+$ ls
+LICENSE.txt  README.md  sh.exe.stackdump
+
+// edit file README.md and "$ git add ." to stage, then commit
+$ git commit -m "Adding updates from branch"
+[updates 82c913c] Adding updates from branch
+ 2 files changed, 14 insertions(+), 1 deletion(-)
+ create mode 100644 sh.exe.stackdump
+
+// check status nothing to commit
+// check commit history
+$ git hist
+* 82c913c (HEAD -> updates) Adding updates from branch
+* 030099c (master) Adding ignore file
+* 799308a remove myfile.txt
+* ea24b70 rename and add
+* 024d48c deleting demo file
+* 2b20364 renaming example
+* bf06da2 adding example file
+* 65c57f7 Updating README
+* 414a21c adding both a README and a LICENSE file to the repo
+
+// check differences between branches
+$ git diff updates master
+
+// switch to 'master' parent branch
+$ git checkout master
+
+// show history, HEAD is now on 'master'. Since head typically means the last commit on the current branch (master)
+// HEAD and 'master' are sharing the same commit id
+$ git hist
+* 82c913c (updates) Adding updates from branch
+* 030099c (HEAD -> master) Adding ignore file
+* 799308a remove myfile.txt
+* ea24b70 rename and add
+* 024d48c deleting demo file
+* 2b20364 renaming example
+* bf06da2 adding example file
+* 65c57f7 Updating README
+* 414a21c adding both a README and a LICENSE file to the repo
+
+// merge 'updates' branch into current branch 'master'
+$ git merge updates
+Updating 030099c..82c913c
+Fast-forward
+ README.md        |  4 +++-
+ sh.exe.stackdump | 11 +++++++++++
+ 2 files changed, 14 insertions(+), 1 deletion(-)
+ create mode 100644 sh.exe.stackdump
+ 
+// 'HEAD', 'master' and 'updates' all point to the same commit id
+$ git hist
+* 82c913c (HEAD -> master, updates) Adding updates from branch
+* 030099c Adding ignore file
+* 799308a remove myfile.txt
+* ea24b70 rename and add
+* 024d48c deleting demo file
+* 2b20364 renaming example
+* bf06da2 adding example file
+* 65c57f7 Updating README
+* 414a21c adding both a README and a LICENSE file to the repo
+
+// delete 'updates' branch
+$ git branch -d updates
+Deleted branch updates (was 82c913c).
+
+// check branch
+$ git branch
+* master
+
+// 'updates' branch is no longer
+$ git hist
+* 82c913c (HEAD -> master) Adding updates from branch
+* 030099c Adding ignore file
+* 799308a remove myfile.txt
+* ea24b70 rename and add
+* 024d48c deleting demo file
+* 2b20364 renaming example
+* bf06da2 adding example file
+* 65c57f7 Updating README
+* 414a21c adding both a README and a LICENSE file to the repo
+
+****************************************************************
+33. Conflict Resolution
+
+// Create new branch 'very-bad'
+
+$ git checkout -b very-bad
+Switched to a new branch 'very-bad'
+
+$ git branch -a
+  master
+* very-bad
+
+// Edit content of file README.md "This is bound to cause trouble" at line "Just some updates.."
+QUOC CUONG@QUOCCUONG MINGW64 ~/projects/pj/demo (very-bad)
+$ notepad README.md
+
+$ git commit -am "very bad update"
+[very-bad 7895db5] very bad update
+ 2 files changed, 1 insertion(+), 12 deletions(-)
+
+$ git hist
+* 7895db5 (HEAD -> very-bad) very bad update
+* 82c913c (master) Adding updates from branch
+* 030099c Adding ignore file
+* 799308a remove myfile.txt
+* ea24b70 rename and add
+* 024d48c deleting demo file
+* 2b20364 renaming example
+* bf06da2 adding example file
+* 65c57f7 Updating README
+* 414a21c adding both a README and a LICENSE file to the repo
+
+// Checkout branch 'master'
+$ git checkout master
+Switched to branch 'master'
+
+// Edit content of file README.md "I hope this isn't much of a problem" at line "Just some updates.."
+$ notepad README.md
+
+
+$ git commit -am "Causing issues again"
+[master de04c05] Causing issues again
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+ 
+***// Merge with branch 'very-bad', cause conflict
+$ git merge very-bad
+Auto-merging README.md
+CONFLICT (content): Merge conflict in README.md
+Automatic merge failed; fix conflicts and then commit the result.
+
+// Content of conflict, and branch name on one side 'master|MERGING'
+QUOC CUONG@QUOCCUONG MINGW64 ~/projects/pj/demo (master|MERGING)
+$ cat README.md
+This is first demo github
+
+<<<<<<< HEAD
+I hope this isn't much of a problem
+=======
+This is bound to cause trouble!
+>>>>>>> very-bad
+
+***// Use 'mergetool' to fix conflict
+$ git mergetool
+Merging:
+README.md
+
+$ git commit -m "Resolving conflict"
+[master a5f16dc] Resolving conflict
+
+// Check status and see 'README.md.orig'. This is file show content of conflict <<<<HEAD ======>>>>>
+$ git status
+On branch master
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        README.md.orig
+
+nothing added to commit but untracked files present (use "git add" to track)
+
+// If don't like save *.orig, insert *.orig in .gitignore and commit
+$ notepad .gitignore
+
+$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+        modified:   .gitignore
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+***// File '.gitignore' is not stage, so cannot commit to repository
+$ git commit -m "updating ignore to exclude merge files"
+On branch master
+Changes not staged for commit:
+        modified:   .gitignore
+
+no changes added to commit
+
+// Use '-am'
+$ git commit -am "updating ignore to exclude merge files"
+[master 9da033a] updating ignore to exclude merge files
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+****************************************************************
+34. Marking Special Events with Tagging
+
+// Have two tags: lightweight tag, annotated tag
+
+$ git tag mytag
+
+$ git tag --list
+mytag
+
+$ git hist
+* 9da033a (HEAD -> master, tag: mytag) updating ignore to exclude merge files
+*   a5f16dc Resolving conflict
+|\
+| * 7895db5 (very-bad) very bad update
+* | de04c05 Causing issues again
+|/
+* 82c913c Adding updates from branch
+* 030099c Adding ignore file
+* 799308a remove myfile.txt
+* ea24b70 rename and add
+
+$ git tag -d mytag
+Deleted tag 'mytag' (was 9da033a)
+
+***// annotated tag
+$ git tag -a v1.0 -m "Release 1.0"
+
+$ git hist
+* 9da033a (HEAD -> master, tag: v1.0) updating ignore to exclude merge files
+*   a5f16dc Resolving conflict
+|\
+| * 7895db5 (very-bad) very bad update
+* | de04c05 Causing issues again
+|/
+* 82c913c Adding updates from branch
+* 030099c Adding ignore file
+* 799308a remove myfile.txt
+
+***// show tag v1.0
+$ git show v1.0
+tag v1.0
+Tagger: CuongDuong2710 <cuongduongngocquoc@gmail.com>
+Date:   Mon Jul 31 09:55:09 2017 +0700
+
+Release 1.0
+
+commit 9da033a9ea243dbb32cbf74644d9a7bb70a16e95
+Author: CuongDuong2710 <cuongduongngocquoc@gmail.com>
+Date:   Mon Jul 31 08:53:42 2017 +0700
+
+    updating ignore to exclude merge files
+
+diff --git a/.gitignore b/.gitignore
+index bf0824e..490a1a0 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -1 +1,2 @@
+-*.log
+\ No newline at end of file
++*.log
++*.orig
+\ No newline at end of file
+
+****************************************************************
+35. Saving Work in progress with Stashing
+
+// change content of README.md
+$ notepad README.md
+
+$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+        modified:   README.md
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+***// But, what if we decide that we're really not supposed to be doing that right now? Or maybe we need to change content and work on something else for a while?
+// We can do that by using Git's stashing ability. And it saved it in a work in progress
+
+$ git stash
+Saved working directory and index state WIP on master: 9da033a updating ignore to exclude merge files
+HEAD is now at 9da033a updating ignore to exclude merge files
+
+$ git stash list
+stash@{0}: WIP on master: 9da033a updating ignore to exclude merge files
+
+// After the "stash", we're actually back on a clean working directory
+
+$ git status
+On branch master
+nothing to commit, working tree clean
+
+// Do something else and then back to apply stash
+
+$ git stash pop
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+        modified:   README.md
+
+no changes added to commit (use "git add" and/or "git commit -a")
+Dropped refs/stash@{0} (133172bed594bc9163bebf83a673231d17a5f669)
+
+// Two actions at once: one is an "apply" the last stash, and then the next is a "drop"
+
+// And then have no result at stash list. Open README.md was updated like it was prior to the stash
+$ git stash list
+
+$ git commit -am "Updating readme again"
+
+
+****************************************************************
+35. Time travel with Reset and Reflog
+
+
+$ git hist
+* 17e6ee1 (HEAD -> master) Updating readme again
+* ef298fd updating license file
+* 9da033a (tag: v1.0) updating ignore to exclude merge files
+*   a5f16dc Resolving conflict
+|\
+| * 7895db5 (very-bad) very bad update
+* | de04c05 Causing issues again
+|/
+* 82c913c Adding updates from branch
+* 030099c Adding ignore file
+* 799308a remove myfile.txt
+* ea24b70 rename and add
+* 024d48c deleting demo file
+* 2b20364 renaming example
+* bf06da2 adding example file
+* 65c57f7 Updating README
+* 414a21c adding both a README and a LICENSE file to the repo
+
+// 3 ways to reset: soft, mixed, hard
+***// HEAD to '9da033a' by soft reset. Soft reset is the least destructive of them all
+$ git reset 9da033a --soft
+
+$ git hist
+* 9da033a (HEAD -> master, tag: v1.0) updating ignore to exclude merge files
+*   a5f16dc Resolving conflict
+|\
+| * 7895db5 (very-bad) very bad update
+* | de04c05 Causing issues again
+|/
+* 82c913c Adding updates from branch
+* 030099c Adding ignore file
+* 799308a remove myfile.txt
+* ea24b70 rename and add
+* 024d48c deleting demo file
+* 2b20364 renaming example
+* bf06da2 adding example file
+* 65c57f7 Updating README
+* 414a21c adding both a README and a LICENSE file to the repo
+
+***// mixed reset
+$ git reset 030099c --mixed
+Unstaged changes after reset:
+M       .gitignore
+M       LICENSE.txt
+M       README.md
+
+// HEAD to '030099c' by mixed reset
+$ git hist
+* 9da033a (tag: v1.0) updating ignore to exclude merge files
+*   a5f16dc Resolving conflict
+|\
+| * 7895db5 (very-bad) very bad update
+* | de04c05 Causing issues again
+|/
+* 82c913c Adding updates from branch
+* 030099c (HEAD -> master) Adding ignore file
+* 799308a remove myfile.txt
+* ea24b70 rename and add
+* 024d48c deleting demo file
+* 2b20364 renaming example
+* bf06da2 adding example file
+* 65c57f7 Updating README
+* 414a21c adding both a README and a LICENSE file to the repo
+
+
+***// hard reset. This is the most destructive of all the reset modes
+$ git reset 65c57f7 --hard
+HEAD is now at 65c57f7 Updating README
+
+// any changes that were pending have been wiped out along with anything that was in the staging area
+$ git status
+On branch master
+nothing to commit, working tree clean
+
+$ git hist
+* 9da033a (tag: v1.0) updating ignore to exclude merge files
+*   a5f16dc Resolving conflict
+|\
+| * 7895db5 (very-bad) very bad update
+* | de04c05 Causing issues again
+|/
+* 82c913c Adding updates from branch
+* 030099c Adding ignore file
+* 799308a remove myfile.txt
+* ea24b70 rename and add
+* 024d48c deleting demo file
+* 2b20364 renaming example
+* bf06da2 adding example file
+* 65c57f7 (HEAD -> master) Updating README
+* 414a21c adding both a README and a LICENSE file to the repo
+
+// we only have two commits being listed
+$ git log --oneline
+65c57f7 Updating README
+414a21c adding both a README and a LICENSE file to the repo
+
+
+*** git log shows us our commit ids
+*** git reflog shows us all the different actions we've taken while in this repository.
+*** this allows us to get all the way back to a specific commit id if we need to
+$ git reflog
+65c57f7 HEAD@{0}: reset: moving to 65c57f7
+030099c HEAD@{1}: reset: moving to 030099c
+9da033a HEAD@{2}: reset: moving to 9da033a
+17e6ee1 HEAD@{3}: commit: Updating readme again
+ef298fd HEAD@{4}: commit: updating license file
+9da033a HEAD@{5}: reset: moving to HEAD
+9da033a HEAD@{6}: commit: updating ignore to exclude merge files
+a5f16dc HEAD@{7}: commit (merge): Resolving conflict
+de04c05 HEAD@{8}: commit: Causing issues again
+82c913c HEAD@{9}: checkout: moving from very-bad to master
+7895db5 HEAD@{10}: commit: very bad update
+82c913c HEAD@{11}: checkout: moving from master to very-bad
+82c913c HEAD@{12}: merge updates: Fast-forward
+030099c HEAD@{13}: checkout: moving from updates to master
+82c913c HEAD@{14}: commit: Adding updates from branch
+030099c HEAD@{15}: checkout: moving from master to updates
+030099c HEAD@{16}: commit: Adding ignore file
+799308a HEAD@{17}: commit: remove myfile.txt
+ea24b70 HEAD@{18}: commit: rename and add
+024d48c HEAD@{19}: commit: deleting demo file
+2b20364 HEAD@{20}: commit: renaming example
+bf06da2 HEAD@{21}: commit: adding example file
+65c57f7 HEAD@{22}: commit: Updating README
+
+$ git reset --hard 17e6ee1
+HEAD is now at 17e6ee1 Updating readme again
+
+$ git log --oneline
+
+*** using 'reset' + 'reflog' really does provide you full control
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+This is first demo github
+
+<<<<<<< HEAD
+I hope this isn't much of a problem
+=======
+This is bound to cause trouble!
+>>>>>>> very-bad
+
+
+
+
+
+
+
+

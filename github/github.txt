@@ -1,0 +1,412 @@
+$ git version
+git version 2.12.2.windows.2
+
+$ git config --global user.name "CuongDuong2710"
+$ git config --global user.email "cuongduongngocquoc@gmail.com"
+$ git config --global --list
+user.name=CuongDuong2710
+user.email=cuongduongngocquoc@gmail.com
+
+
+$ git clone https://github.com/CuongDuong2710/github-demo.git
+$ ls
+
+$ cd github-demo/
+QUOC CUONG@QUOCCUONG MINGW64 ~/projects/github-demo (master)
+
+$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+nothing to commit, working tree clean
+
+// Show current path
+$ pwd
+
+// Print content into start.txt
+$ echo "Test Git Quick Start demo" >> start.txt
+
+// Show file in github-demo
+$ ls
+README.md  start.txt
+
+// Show content of start.txt
+$ cat start.txt
+Test Git Quick Start demo
+
+$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        start.txt
+
+nothing added to commit but untracked files present (use "git add" to track)
+
+* untracked files is in our working directory that doesn't been added to Git yet.
+
+// add start.txt into Staging Area, are awaiting the commit. We haven't committed anything yet.
+// The staging area is designed to allow you to build up several related changes.
+$ git add start.txt
+
+$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        new file:   start.txt
+		
+// commit into local Reposity (.git folder)
+$ git commit -m "Adding start text file"
+[master 7275985] Adding start text file
+ 1 file changed, 1 insertion(+)
+ create mode 100644 start.txt
+
+$ git status
+On branch master
+Your branch is ahead of 'origin/master' by 1 commit.
+  (use "git push" to publish your local commits)
+nothing to commit, working tree clean
+
+// push on your repository
+$ git push origin master
+Counting objects: 3, done.
+Delta compression using up to 32 threads.
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 320 bytes | 0 bytes/s, done.
+Total 3 (delta 0), reused 0 (delta 0)
+To https://github.com/CuongDuong2710/github-demo.git
+   bc66a7d..7275985  master -> master
+
+ 
+// Create new repository locally
+$ git init fresh-project
+Initialized empty Git repository in C:/Users/QUOC CUONG/projects/fresh-project/.git/
+   
+// List all files and folders, including dot files and folders
+$ ls -al
+total 6
+drwxr-xr-x 1 QUOC CUONG 197121  0 Jul 29 11:58 ./
+drwxr-xr-x 1 QUOC CUONG 197121  0 Jul 29 11:50 ../
+drwxr-xr-x 1 QUOC CUONG 197121  0 Jul 29 12:02 .git/
+-rw-r--r-- 1 QUOC CUONG 197121 72 Jul 29 11:50 README.md
+-rw-r--r-- 1 QUOC CUONG 197121 26 Jul 29 11:58 start.txt
+
+// Remove repository
+QUOC CUONG@QUOCCUONG MINGW64 ~/projects
+$ rm -rf fresh-project/
+
+$ git status
+fatal: Not a git repository (or any of the parent directories): .git
+
+****************************************************************
+1.
+// initialize
+$ git init .
+Initialized empty Git repository in C:/Users/QUOC CUONG/projects/pj/demo/.git/
+
+* . is current folder (demo)
+
+$ git add .
+
+* . add all files in folder to staging area (demo)
+
+// git commmit message to save and exit
+
+Esc to make sure you exit insert mode, then :wq (colon w q) or ZZ (shift-Z shift-Z).
+
+// log
+$ git log
+$ git show
+
+// open notepad to edit file
+$ notepad README.md
+
+$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+        modified:   README.md
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+// all files being tracked
+$ git ls-files
+
+// add new file
+$ touch new.file
+
+$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+        modified:   README.md
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+$ rm new.file
+
+// Express commit
+// -a parameter tells Git to first add modified files to the Git staging area and then directly proceed to committing
+$ git commit -am "Updating README"
+[master 65c57f7] Updating README
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+$ git log
+commit 65c57f7425fa2017d6f5c7083e22a9f7a76eaa14
+Author: CuongDuong2710 <cuongduongngocquoc@gmail.com>
+Date:   Sat Jul 29 23:21:53 2017 +0700
+
+    Updating README
+
+commit 414a21c6110eb548d240fa9937407e86750d5d59
+Author: CuongDuong2710 <cuongduongngocquoc@gmail.com>
+Date:   Sat Jul 29 22:36:49 2017 +0700
+
+    adding both a README
+    and a LICENSE file to the repo
+	
+****************************************************************
+23. Backing out changes 
+// Edit README.txt, git status README.txt is modified (red), then add to staging state
+$ git add .
+// git status README.txt is modified (green), into staging state
+// RESET to unstage
+$ git reset HEAD README.md
+// git status README.txt is modified (red), into unstaging state
+// revert to first status (not edit README.txt)
+$ git checkout -- README.md
+$ git status
+On branch master
+nothing to commit, working tree clean
+
+****************************************************************
+24. History and new command with alias
+
+// oneline: provide a lot of that information on a single line, instead of multiple lines
+// graph: which will provide an asterisk based graph denoting our branching hierarchy
+// decorate: which will tell us which commits are a part of which branches
+// all: which will provide the history for all branches that are available in this repository
+
+$ git log --oneline --graph --decorate --all
+* 65c57f7 (HEAD -> master) Updating README
+* 414a21c adding both a README and a LICENSE file to the repo
+
+// Create an alias
+$ git config --global alias.hist "log --oneline --graph --decorate --all"
+
+// Show all config
+$ git config --global --list
+user.name=CuongDuong2710
+user.email=cuongduongngocquoc@gmail.com
+core.editor='C:/Program Files (x86)/Notepad++/notepad++.exe' -multiInst -notabbar -nosession -noPlugin
+alias.hist=log --oneline --graph --decorate --all
+
+
+$ git hist
+* 65c57f7 (HEAD -> master) Updating README
+* 414a21c adding both a README and a LICENSE file to the repo
+
+$ git hist -- LICENSE.md
+* 414a21c adding both a README and a LICENSE file to the repo
+
+****************************************************************
+25. Rename and delete files
+
+// Rename
+$ git mv example.txt demo.txt
+
+$ git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        renamed:    example.txt -> demo.txt
+
+		
+
+$ git commit -m "renaming example"
+[master 2b20364] renaming example
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ rename example.txt => demo.txt (100%)
+
+ // delete file
+ 
+$ git rm demo.txt
+rm 'demo.txt'
+
+$ git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        deleted:    demo.txt
+
+$ git commit -m "deleting demo file"
+[master 024d48c] deleting demo file
+ 1 file changed, 1 deletion(-)
+ delete mode 100644 demo.txt
+
+
+****************************************************************
+26. Managing Files Outside of Git
+
+$ touch myfile.txt
+
+// "mv" not "git mv": bash command
+$ mv LICENSE.md LICENSE.txt
+
+$ ls -l
+total 2
+-rw-r--r-- 1 QUOC CUONG 197121  9 Jul 29 22:33 LICENSE.txt
+-rw-r--r-- 1 QUOC CUONG 197121  0 Jul 30 10:19 myfile.txt
+-rw-r--r-- 1 QUOC CUONG 197121 25 Jul 29 23:40 README.md
+
+$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add/rm <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+        deleted:    LICENSE.md
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        LICENSE.txt
+        myfile.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+// for simply having deletions, -u which stands for update
+$ git add -u
+
+$ git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        deleted:    LICENSE.md
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        LICENSE.txt
+        myfile.txt
+
+// include both additions and deletions, that will cover all types of modifications possible on the current working directory
+$ git add -A
+warning: LF will be replaced by CRLF in LICENSE.txt.
+The file will have its original line endings in your working directory.
+
+$ git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        renamed:    LICENSE.md -> LICENSE.txt
+        new file:   myfile.txt
+
+$ git commit -m "rename and add"
+[master ea24b70] rename and add
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+ rename LICENSE.md => LICENSE.txt (100%)
+ create mode 100644 myfile.txt
+
+$ rm myfile.txt
+
+$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add/rm <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+        deleted:    myfile.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+$ git add -u
+
+$ git commit -m "remove myfile.txt"
+[master 799308a] remove myfile.txt
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ delete mode 100644 myfile.txt
+ 
+ 
+****************************************************************
+27. Excluding unwanted file
+
+$ notepad application.log
+
+$ git status
+
+$ git status
+On branch master
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        application.log
+
+nothing added to commit but untracked files present (use "git add" to track)
+
+// create .gitignore file with content is *.log
+
+$ notepad .gitignore
+
+$ git status
+On branch master
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        .gitignore
+
+nothing added to commit but untracked files present (use "git add" to track)
+
+$ git add .gitignore
+
+$ git commit -m "Adding ignore file"
+[master 030099c] Adding ignore file
+ 1 file changed, 1 insertion(+)
+ create mode 100644 .gitignore
+
+// clean working directory, "application.log" has been excluded
+$ git status
+On branch master
+nothing to commit, working tree clean
+
+// it still in the file system, but it's not in our Git repository
+$ ls
+application.log  LICENSE.txt  README.md
+
+$ rm application.log
+
+
+====================================================================================================================
+*** Must enter git reposity to commit, check status...
+QUOC CUONG@QUOCCUONG MINGW64 ~/projects
+$ git status
+fatal: Not a git repository (or any of the parent directories): .git
+
+*** Error when push
+$ git push origin master
+remote: Permission to CuongDuong2710/github-demo.git denied to pavnguyen.
+fatal: unable to access 'https://github.com/CuongDuong2710/github-demo.git/': The requested URL returned error: 403
+
+*** Solution
+https://stackoverflow.com/questions/15381198/remove-credentials-from-git/39608906#39608906
+If this problem comes on a Windows machine, do the following.
+
+1. Go to Credential Manager
+2. Go to Windows Credentials
+3. Delete the entries under Generic Credentials
+Try connecting again. This time, it should prompt you for the correct username and password.
+
+
+
+
+

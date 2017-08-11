@@ -1,0 +1,215 @@
+GITHUB REPOSITORY
+52. Seeding the Repository with sample content
+
+// Create new repository at github web and clone via SSH
+$ git clone git@github.com:CuongDuong2710/my-website.git
+Cloning into 'my-website'...
+Enter passphrase for key '/c/Users/QUOC CUONG/.ssh/id_rsa':
+remote: Counting objects: 5, done.
+remote: Compressing objects: 100% (4/4), done.
+remote: Total 5 (delta 0), reused 0 (delta 0), pack-reused 0
+Receiving objects: 100% (5/5), 4.64 KiB | 0 bytes/s, done.
+
+$ ls -l
+total 12
+drwxr-xr-x 1 QUOC CUONG 197121 0 Jul 29 16:20 github-demo/
+drwxr-xr-x 1 QUOC CUONG 197121 0 Jul 31 21:19 my-website/
+drwxr-xr-x 1 QUOC CUONG 197121 0 Jul 31 17:13 pj/
+drwxr-xr-x 1 QUOC CUONG 197121 0 Jul 29 16:51 web-project/
+
+$ rm -rf my-website/
+
+$ ls -l
+
+//that will list all files including hidden files
+$ ls - al
+
+// clone and change folder name to 'website'
+$ git clone git@github.com:CuongDuong2710/my-website.git website
+
+// Downloads files in http://www.initializr.com/ and extract
+// then copy into 'website' folder
+
+$ cd website/
+
+// bash cmd <cp -R> for recursive, copy over all the files.
+// <~>: which references my user's home directory
+// Downloads/initializr/* that means everything under 'initializr' folder
+// The first path is the source location, and then the dot is the destination which represents the current folder
+
+QUOC CUONG@QUOCCUONG MINGW64 ~/projects/website (master)
+$ cp -R ~/Downloads/initializr/* .
+
+// enter ls -l will show all files to copy 'website' folder
+$ ls -l
+
+// untracked files
+$ git status
+
+$ git add .
+
+// tracking files
+$ git status
+
+$ git commit -m "Adding initial website files"
+
+$ git push origin master
+
+// check Github on website all files are pushed
+
+================================================
+*** 54. Fetch and Pull
+
+// Edit file 'index.html', provide message and commit in remote repository 
+<title>My website</title>
+
+// Modify our file on our local repository REAME.md and commit
+$ git commit -am "Updating README"
+
+// We made a commit on Github directly
+$ git status
+On branch master
+Your branch is ahead of 'origin/master' by 1 commit.
+  (use "git push" to publish your local commits)
+nothing to commit, working tree clean
+
+// Try pushing up our change, Github rejected our attempt to push
+// It's telling us to 'fetch' first
+$ git push
+To github.com:CuongDuong2710/my-website.git
+ ! [rejected]        master -> master (fetch first)
+error: failed to push some refs to 'git@github.com:CuongDuong2710/my-website.git'
+hint: Updates were rejected because the remote contains work that you do
+hint: not have locally. This is usually caused by another repository pushing
+hint: to the same ref. You may want to first integrate the remote changes
+hint: (e.g., 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+
+***// Keep in mind, 'pull' is really two commands in one; it is a 'fetch' and it is also a 'merge'.
+// Git will first fetch all the updates from the remote repository, and then it will merge those changes into our current repository
+***// If we dit the pull, we would automatically integrate any changes that are out on Github; however, that can be a destructive command.
+// if you have changes that are not compatible with what's currently on Github
+// So, one way to alleviate that is just do a 'fetch'; fetches are non-destructive
+
+$ git fetch
+remote: Counting objects: 3, done.
+remote: Compressing objects: 100% (3/3), done.
+remote: Total 3 (delta 2), reused 0 (delta 0), pack-reused 0
+Unpacking objects: 100% (3/3), done.
+From github.com:CuongDuong2710/my-website
+   fc80526..eaa2e31  master     -> origin/master
+
+// diverged: phân tách
+// That we have one commit that's different on each side
+// And it recommends that we use 'git pull' to automatically merge our remote branch
+$ git status
+On branch master
+Your branch and 'origin/master' have diverged,
+and have 1 and 1 different commits each, respectively.
+  (use "git pull" to merge the remote branch into yours)
+nothing to commit, working tree clean
+
+
+***// Sice the master branch on both sides were different, what's occuring is a merge commit MERGE_MSG. That's safe to merge
+$ git pull
+Merge made by the 'recursive' strategy.
+ index.html | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+ 
+// However, we're not done. We just merged down everything from Github.
+// Github is still unaware of our changes, so we need to push up what we have.
+
+$ git push
+Counting objects: 5, done.
+Delta compression using up to 32 threads.
+Compressing objects: 100% (4/4), done.
+Writing objects: 100% (5/5), 577 bytes | 0 bytes/s, done.
+Total 5 (delta 2), reused 0 (delta 0)
+remote: Resolving deltas: 100% (2/2), completed with 1 local object.
+To github.com:CuongDuong2710/my-website.git
+   eaa2e31..afc1731  master -> master
+
+***// Doing a pull, or a fetch, prior to any pushes is a best practice. And a necessity if you are sharing your repository with others.
+
+
+================================================
+56. Updating Repository and Remote References
+
+// Changes name branch from 'my-website' to 'website' at Github website
+
+$ git remote set-url origin git@github.com:CuongDuong2710/website.git
+
+$ git remote -v
+origin  git@github.com:CuongDuong2710/website.git (fetch)
+origin  git@github.com:CuongDuong2710/website.git (push)
+
+$ git remote show origin
+* remote origin
+  Fetch URL: git@github.com:CuongDuong2710/website.git
+  Push  URL: git@github.com:CuongDuong2710/website.git
+  HEAD branch: master
+  Remote branch:
+    master tracked
+  Local branch configured for 'git pull':
+    master merges with remote master
+  Local ref configured for 'git push':
+    master pushes to master (up to date)
+	
+================================================
+62. Synchronizing  our Changes with our Local Repository
+
+// Make changes from remote as create new file, edit file, rename file...
+
+$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+nothing to commit, working tree clean
+
+$ git fetch
+remote: Counting objects: 19, done.
+remote: Compressing objects: 100% (17/17), done.
+remote: Total 19 (delta 10), reused 0 (delta 0), pack-reused 0
+Unpacking objects: 100% (19/19), done.
+From github.com:CuongDuong2710/website
+   afc1731..ff117ce  master     -> origin/master
+   
+$ git status
+On branch master
+Your branch is behind 'origin/master' by 7 commits, and can be fast-forwarded.
+  (use "git pull" to update your local branch)
+nothing to commit, working tree clean
+
+$ git pull
+Updating afc1731..ff117ce
+Fast-forward
+ index.html | 2 +-
+ lipsum.txt | 1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+ create mode 100644 lipsum.txt
+
+// Show new file lipsum.txt
+ $ ls -al
+
+================================================
+66. Using commit IDs with the Local Repository
+
+$ git show 791d2a59bb57b170b98b16405f0a61a24631b515
+commit 791d2a59bb57b170b98b16405f0a61a24631b515
+Author: CuongDuong2710 <cuongduongngocquoc@gmail.com>
+Date:   Mon Jul 31 22:01:12 2017 +0700
+
+    Updating README
+
+diff --git a/README.md b/README.md
+index ee5d7b8..fc3fbea 100644
+--- a/README.md
++++ b/README.md
+@@ -1 +1,3 @@
+-# my-website
+\ No newline at end of file
++# My Website
++
++This is a really awesome website
+\ No newline at end of file
+
+

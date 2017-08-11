@@ -1,0 +1,66 @@
+ssh - Git's famous "ERROR: Permission to .git denied to user" - Stack ...
+
+$ git push origin master
+remote: Permission to CuongDuong2710/github-demo.git denied to pavnguyen.
+fatal: unable to access 'https://github.com/CuongDuong2710/github-demo.git/': The requested URL returned error: 403
+
+=> https://help.github.com/articles/error-permission-to-user-repo-denied-to-user-other-repo/
+This error means the key you are pushing with is attached to another repository as a deploy key, and does not have access to the repository you are trying to push to.
+
+https://stackoverflow.com/questions/15381198/remove-credentials-from-git/39608906#39608906
+If this problem comes on a Windows machine, do the following.
+
+Go to Credential Manager
+Go to Windows Credentials
+Delete the entries under Generic Credentials
+Try connecting again. This time, it should prompt you for the correct username and password.
+
+====================================================================================================================
+
+//Generating a new SSH key
+
+$ ssh-keygen -t rsa -b 4096 -C "cuongduongngocquoc@gmail.com"
+Generating public/private rsa key pair.
+Enter file in which to save the key (/c/Users/QUOC CUONG/.ssh/id_rsa):
+Created directory '/c/Users/QUOC CUONG/.ssh'.
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in /c/Users/QUOC CUONG/.ssh/id_rsa.
+Your public key has been saved in /c/Users/QUOC CUONG/.ssh/id_rsa.pub.
+The key fingerprint is:
+SHA256:sVjf++cHdnArzzzQ18uqAWUiIu3fS/E22xAXhXU0ip4 cuongduongngocquoc@gmail.com
+The key's randomart image is:
++---[RSA 4096]----+
+|              o=o|
+|    .       ..o o|
+|   . o .o. + o   |
+|    o .o.+=.. o .|
+|     .. So.E...oo|
+|      . . + o+oo+|
+|       . o *..Boo|
+|        . o *. Bo|
+|         . o.ooo+|
++----[SHA256]-----+
+
+
+* passphrase: cuongduong
+
+// Checking for existing SSH keys
+$ ls -al ~/.ssh
+total 20
+drwxr-xr-x 1 QUOC CUONG 197121    0 Jul 29 12:33 ./
+drwxr-xr-x 1 QUOC CUONG 197121    0 Jul 29 12:32 ../
+-rw-r--r-- 1 QUOC CUONG 197121 3326 Jul 29 12:33 id_rsa
+-rw-r--r-- 1 QUOC CUONG 197121  754 Jul 29 12:33 id_rsa.pub
+
+
+// Ensure the ssh-agent is running
+$ eval $(ssh-agent -s)
+Agent pid 8972
+
+// Add your SSH private key to the ssh-agent
+$ ssh-add ~/.ssh/id_rsa
+Enter passphrase for /c/Users/QUOC CUONG/.ssh/id_rsa:
+Identity added: /c/Users/QUOC CUONG/.ssh/id_rsa (/c/Users/QUOC CUONG/.ssh/id_rsa)
+
+
