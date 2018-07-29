@@ -1,0 +1,53 @@
+_ Giá 5 tr
++ Design logo giống như app StoryBeBi.
++ Hỗ trợ bảo trì, nâng cấp app miễn phí trong vòng 3 tháng.
++ Database đưa lên cloud đảm bảo dung lượng app nhẹ nhất, tiện lợi cài đặt vào máy.
++ Hỗ trợ nhiều loại thiết bị khác nhau.
+
+Và còn một chức năng tiện ích khác nữa mà hôm qua em không thấy mấy app của anh có, app StoryBeBi của em cũng chưa có luôn.
+Nếu anh đồng ý chốt đơn hàng thì khi phát triển em sẽ tích hợp chức năng này vô app của anh.
+
+
+tổng hợp
+Hài hước
+trẻ em
+động vật
+thể thao
+music for baby
+kids songs
+
+ca-app-pub-5590642543350961~5602806669
+
+1. Chia ra các danh mục
+2. General là tổng hợp hết tất cả các thể loại kia.
+3. Video tự động play
+4. Hiển thị Ads
+5. Chỉnh giao diện bắt mắt
+6. Phân loại video theo danh mục
+
+
+1. Lấy id app và ad từ a Thọ
+
+Sáng CN 10h (22-10-2017)
+
+
++ đã thêm back button
++ chỉnh lại giao diện player
++ logo và background ở màn hình splash screen
++ bỏ tìm kiếm
++ thêm Rate Us
++ Thêm chữ 'Funny'
+
++ Bo tròn logo
++ Background tên app
++ Click hình vô coi phim
++ Thay Music for baby -> Cartoons
+
+
+ca-app-pub-4439595704793521~4858151305
+ca-app-pub-4439595704793521/7926812554
+
+=============================================
+
+ca-app-pub-5590642543350961~5602806669
+ca-app-pub-5590642543350961/7169812818

@@ -1,0 +1,31 @@
+Lists:
+ArrayList, LinkedList, Vector
+
+Sets:
+HashSet, TreeSet, LinkedHashSet
+
+Maps:
+HashMap, Hashtable, TreeMap
+
+
+package cuong.company;
+
+public class SinhVien {
+	public int ma = 1; // * public int ma;
+	public String ten = "Cuong"; // * public int ten;
+	
+	public SinhVien(){}
+	
+	public SinhVien(int ma, String ten) {
+		this.ma = ma;
+		this.ten = ten;
+	}
+	
+}
+
+
+SinhVien sv1 = new SinhVien();
+SinhVien sv2 = new SinhVien(2, "abc");
+		
+System.out.println(sv1.ma + ", " + sv1.ten); // 1, Cuong OR '0, null' if  *
+System.out.println(sv2.ma + ", " + sv2.ten); // 2, abc

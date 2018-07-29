@@ -1,6 +1,19 @@
+Advanced Git commands
+
+http://webcache.googleusercontent.com/search?q=cache:http://blog.tylerbuchea.com/advanced-git-commands/
+
+===================================
+Basic Git Workflow Life Cycle
+
+Working Directory
+Staging Area
+Repository (.git folder)
+
+Remote
+
+===================================
 Setup the Project Folder
 
-pwd
 mkdir projects
 cd projects
 pwd
@@ -12,11 +25,78 @@ git version
 git config --global user.name <username>
 git config --global user.email <password>
 git config --global init
+$ git config --global push.default simple
+git config --global --list
+
+user.name=CuongDuong2710
+user.email=cuongduongngocquoc@gmail.com
+core.editor='C:/Program Files (x86)/Notepad++/notepad++.exe' -multiInst -notabbar -nosession -noPlugin
+alias.hist=log --oneline --graph --decorate --all
+diff.tool=p4merge
+difftool.p4merge.path=C:\Program Files\Perforce\p4merge.exe
+merge.tool=p4merge
+mergetool.p4merge.path=C:\Program Files\Perforce\p4merge.exe
+push.default=simple
+
+$ git config --global --e
 
 ===================================
 Copy the Repository (clone)
 
 git clone <url-of-repository-as-HTTPS-or-SSH>
+
+// clone and change folder name to 'website'
+$ git clone <url-of-repository-as-HTTPS-or-SSH> <name-of-folder>
+
+===================================
+REMOTE TO REPOSITORY
+
+// Check remote
+$ git remote -v
+
+// Add remote
+// 'origin' name of the remote reference we want to create (by convention the first and primary repository)
+
+$ git remote add origin <url-http-or-ssh>
+
+// Set url
+$ git remote set-url origin git@github.com:CuongDuong2710/website.git
+
+// Show information 'origin'
+$ git remote show origin
+
+// delete remote
+$ git remote rm <origin-name>
+
+===================================
+SHOW ALL BRANCH
+$ git branch
+
+// show remote/origin
+$ git branch -a
+* master
+  remove-ipsum
+  remotes/origin/HEAD -> origin/master
+  remotes/origin/example
+  remotes/origin/master
+  remotes/origin/remove-ipsum
+
+===================================
+DELETE BRANCH
+
+// delete branch
+$ git branch -d <name-of-branch>
+
+// we still have the 'origin/<name-of-branch>' branch referenced on origin
+$ git branch -a
+  remotes/origin/<name-of-branch>
+
+<-p>: prune option, which means it's going to look for any dead branches and remove those references
+$ git fetch -p
+
+// OR we delete branch from local and push to remote -> delete branch on GitHub
+// ':' is telling GitHub to delete whatever the name is of the branch after the colon
+$ git push origin :update-readme
 
 ===================================
 First Commit
@@ -27,17 +107,31 @@ git add start.txt
 git commit -m "Adding start text file"
 git status
 
+[master (root-commit) 3f94039] 
+
+// commit open editor and enter message
+
+git commit
+
 ===================================
 Publishing Changes to GitHub (push)
+
+// The 1st push
+// <-u>: which is going to set up a tracking branch relationship between the 'master' branch on the local repository
+// 'origin' name of the remote reference we want to create (by convention the first and primary repository)
+ 
+$ git push -u origin master --tags
 
 git push origin master
 
 ===================================
+LIST
 
 // list all files and 'read', 'write'
 ls -l
 
 // remove folder, repository
+// '-rf': forcefully and recursily delete
 rm -rf <name-of-folder>
 rm -rf <name-of-repository>
 
@@ -48,20 +142,24 @@ $ ls -al
 $ git ls-files
 
 ===================================
-Create new repository locally
+CREATE NEW REPOSITORY LOCALLY
 
 $ git init <name-of-project>
 
 // or cd <name-of-project>
 $ git init
 
-// or <.> is current folder
+// or <.> is current existing project
 
 $ git init .
 
 // <.> add all files in folder to staging area (demo)
 
 $ git add .
+
+// add name file
+
+$ git add <name-file>
 
 // or for simply having deletions, -u which stands for update
 $ git add -u
@@ -70,53 +168,411 @@ $ git add -u
 LOG
 
 $ git log
+$ git log --oneline
 $ git show
+$ git help log
+$ git log --oneline --graph
+
+// show commit ID
+$ git show 791d2a59bb57b170b98b16405f0a61a24631b515
 
 ===================================
 Add new file
 
 $ touch new.file
 
+// Open npp and create new file
+
+$ npp README.md
+
 ===================================
-Express commit
+EXPRESS COMMIT
 
 // <-a> parameter tells Git to first add modified files to the Git staging area and then directly proceed to committing
 $ git commit -am "Updating README"
 
 ===================================
-Create an alias
+CREATE AN ALIAS
+
+// '--oneline': providing a lot of information on a single line, instead of multiple lines
+// '--graph': provide an asterisk based graph denoting our branching hierarchy
+// '--decorate': will tell us which commits are a part of which branches and other labels within the Git repository
+// '--all': provide the history for all the branches that are available in this repository
 
 $ git config --global alias.hist "log --oneline --graph --decorate --all"
 
 $ git hist
 
+$ git hist -- <name-file>
+
+$ git config --global alias.co commit
+
 ===================================
-Rename and delete files
+RENAME AND DELETE FILES
 
 // Rename
 $ git mv <old-name> <new-name>
 
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        renamed:    example.txt -> demo.text
+
+=> then commit file
+
+rename example.txt => demo.text (100%)
+
+// Delete
+// 'git rm': file on staging area, be tracking
+// 'rm': file on working area, not be tracking -> git add .
+
+$ git rm demo.txt
+$ git status
+deleted:    demo.text
+
+=> commit
 
 
 
+===================================
+COMPARE DIFFERENCE - Lecture 29. Comparing differences
+
+Z:\reactnative\manager>git hist
+* 9cfedbf (HEAD -> master, origin/master) create src folder and app.js
+* 53ca177 create app.js registry in android & ios
+* 72acd1c First commit manager app
+
+git diff 53ca177 HEAD
+
+git diff <commit-id> <commit-id-or-HEAD>
+
+*** only diff modified file not new file
+
+// Launch 'p4merge'
+git difftool 53ca177 HEAD
+
+// Compare between changes of current local with HEAD
+git diff
+
+git difftool
+
+// check differences between branches
+$ git diff updates master
+
+===================================
+RESET -- Lecture 23. Backing out changes 
+
+// Updating file README and add to staging area. Then reset to HEAD unstaged
+$ npp README.md
+
+Changes not staged for commit: (red)
+Changes to be committed: (green)
+
+$ git reset HEAD README.md
+Unstaged changes after reset:
+M       README.md
+
+=> Changes not staged for commit: (red)
+
+// Back to original, not update
+$ git checkout -- README.md
 
 
+===================================
+26. Managing Files Outside of Git
+
+// for simply having deletions, -u which stands for update
+$ git add -u
+
+// include both additions and deletions, that will cover all types of modifications possible on the current working directory
+$ git add -A
+
+****************************************************************
+32. Simple branching example - FAST-FORWARD
+// show all branch
+$ git branch
+* master
+
+// switch new branch, since there were modifications pending in working directory, it carried those modifications forward into that new branch
+// '-b': creating new branch
+$ git checkout -b updates
+Switched to a new branch 'updates'
+M       README.md
+
+// edit file README.md and "$ git add ." to stage at 'updates' branch, then commit
+$ git hist
+* 82c913c (HEAD -> updates) Adding updates from branch
+* 030099c (master) Adding ignore file
+
+// Switch to 'master' branch and merge changes with 'updates' branch. And then delete 'updates' branch
+$ git checkout master
+$ git merge updates
+$ git branch -d updates
+
+*** <-D>: if you sure you want to delete this branch.
+
+****************************************************************
+33. Conflict Resolution - Manual Merge to resolve conflict
+
+// edit README.md same location at 'master' and 'very-bad' branch
+$ git checkout -b very-bad
+$ notepad README.md => commit
+$ git checkout master
+$ notepad README.md => commit
+$ git merge very-bad => CONFLICT!!!
+$ cat README.md
+$ git mergetool
+$ git commit -m "Resolving conflict"
+
+****************************************************************
+34. Marking Special Events with Tagging - note major milestones or associate some information
+
+$ git tag mytag
+
+$ git tag --list
+$ git tag -d mytag
+$ git tag -a v1.0 -m "Release 1.0" // tag by previous commint
+$ git show v1.0
+
+$ git tag -a v0.2 <commit-id> // tag by commit-id
+$ git push origin <name-of-tag> // ex: v0.2
+
+$ git push origin --tags // You can also push all tags at once
 
 
+****************************************************************
+35. Saving Work in progress with Stashing
 
+$ notepad README.md
+$ git stash
+$ git stash list
+$ git status
+On branch master
+nothing to commit, working tree clean
+$ git stash pop
+$ git commit -am "Updating readme again"
 
+****************************************************************
+*** IMPORTANT - 36. Time travel with Reset and Reflog
 
+$ git hist
 
+// 3 ways to reset: soft, mixed, hard
+***// HEAD to '9da033a' by soft reset. Soft reset is the least destructive of them all. All it does is change where HEAD is pointing, still "Changes to be committed:"
+$ git reset 9da033a --soft
 
+***// mixed reset - default "Unstaged changes after reset:"
+$ git reset 030099c --mixed
 
+***// hard reset. This is the most destructive of all the reset modes, wiped out all any changes
+$ git reset 65c57f7 --hard
 
+*** git log shows us our commit ids
+*** git reflog shows us all the different actions we've taken while in this repository.
+*** this allows us to get all the way back to a specific commit id if we need to
+$ git reflog
 
-// Copy file or folder
-// bash cmd <cp -R> for recursive, copy over all the files.
-// <~>: which references my user's home directory
-// Downloads/initializr/* that means everything under 'initializr' folder
-// The first path is the source location, and then the dot is the destination which represents the current folder
+$ git reset --hard 17e6ee1
 
-QUOC CUONG@QUOCCUONG MINGW64 ~/projects/website (master)
+****************************************************************
+52. Seeding the Repository with sample content
+
+Copy
 $ cp -R ~/Downloads/initializr/* .
+
+================================================
+*** 54. Fetch and Pull
+
+***// Doing a pull, or a fetch, prior to any pushes is a best practice. And a necessity if you are sharing your repository with others.
+
+// Edit file and commit in remote repository 
+
+// Modify our file on our local repository and commit
+$ git commit
+$ git status
+Your branch is ahead of 'origin/master' by 1 commit.
+
+// Try pushing up our change, Github rejected our attempt to push
+// It's telling us to 'fetch' first
+$ git push
+To github.com:CuongDuong2710/my-website.git
+ ! [rejected]        master -> master (fetch first)
+ 
+// 'fetch' are non-destructive than 'pull' 
+$ git fetch
+$ git status => 'Your branch and 'origin/master' have diverged,'
+
+// What's occuring is a merge commit MERGE_MSG. It's safe, no conflict
+$ git pull
+
+// Github is still unaware of our changes, so we need to push up what we have.
+
+$ git push
+
+
+================================================
+GIT STATUS
+
+// Remote repository and local repository have both changes and commit
+$ git fetch
+$ git status
+Your branch and 'origin/master' have diverged,
+
+// Local repository have changes and not push to remote
+$ git status
+On branch master
+Your branch is ahead of 'origin/master' by 1 commit.
+
+// Remote have changes and commit but local not unaware
+$ git status
+On branch master
+Your branch is behind 'origin/master' by 7 commits, and can be fast-forwarded.
+
+
+================================================
+MARKDOWN
+
+##: bold and size of title
+*: bullet 
+_text_ or *text*: italic
+__text__ or **text**: bold
+
+================================================
+Lecture 69 - Local Branches
+
+$ git checkout -b remove-ipsum
+$ git rm lipsum.txt
+$ git commit -m "Removing ipsum file"
+$ git push -u origin remove-ipsum // <-u>: which is going to set up a tracking branch relationship between the 'remove-ipsum' branch on the local repository
+Branch master (at local) set up to track remote branch master from origin.
+
+================================================
+71. Merging locally
+
+// check status 'remove-ipsum' branch
+$ git status
+
+// switch 'master' branch
+$ git checkout master
+
+// pull before merge
+$ git pull
+
+*** // merge with 'remove-ipsum' branch
+$ git merge remove-ipsum
+
+// push changes
+$ git push
+
+$ git branch -d remove-ipsum
+
+// <-p>: prune option, which means it's going to look for any dead branches and remove those references
+$ git fetch -p
+
+================================================
+72. 
+
+1. Create new branch update-readme on GitHub
+2. On terminal, 'git fetch' any changes
+3. 'git status' to see new origin/update-readme
+4. 'git checkout update-readme' to track local branch with remote branch 'update-readme'
+================================================
+73. Cleaning up by deleting branches and references
+
+// pull all branches
+$ git pull --all
+
+$ git push origin :update-readme
+
+================================================
+*** IMPORTANT - 74. Pull with Rebase
+
+// This is a good strategy when you're working on something, and you want to make sure that your changes are ahead of whatever's going on from the remote site.
+// 1. Update any file on GitHub and commit
+// 2. Update any file on local and commit. Then 'fetch', 'git status' -> diverged
+
+Your branch and 'origin/master' have diverged,
+and have 1 and 1 different commits each, respectively.
+
+$ git hist
+* 8cc45f1 (HEAD -> master) updating index.html locally before rebase
+| * 0ffcae0 (origin/master, origin/HEAD) Readme update on master on GitHub before rebase
+|/
+* 4c5f4a0 Update Readme from remote 'update-readme' branch
+
+git pull --rebase
+First, rewinding head to replay your work on top of it...
+Applying: Updating index.html locally before rebase
+
+# local changes ahead remote changes. Local updates any changes from remote. But any changes from local doesn't push to remote.
+
+* 4cea006 (HEAD -> master) updating index.html locally before rebase
+* 0ffcae0 (origin/master, origin/HEAD) Readme update on master on GitHub before rebase
+* 4c5f4a0 Update Readme from remote 'update-readme' branch
+
+================================================
+77. Dealing with a Conflict while Pulling
+
+// Modify 'README.md' on GitHub remote and commit
+$ git checkout develop
+
+$ git fetch
+
+// local is not updated with remote's changes
+$ git status
+On branch develop
+Your branch is behind 'origin/develop' by 1 commit, and can be fast-forwarded.
+  (use "git pull" to update your local branch)
+nothing to commit, working tree clean
+
+// edit 'README.md' on local
+$ notepad README.md
+
+$ git commit -am "Updating README with malice on local side"
+
+$ git status
+On branch develop
+Your branch and 'origin/develop' have diverged,
+and have 1 and 1 different commits each, respectively.
+  (use "git pull" to merge the remote branch into yours)
+nothing to commit, working tree clean
+
+***// Conflict
+
+$ git pull
+Auto-merging README.md
+CONFLICT (content): Merge conflict in README.md
+Automatic merge failed; fix conflicts and then commit the result.
+
+// Fix conflict 'develop|MERGING'
+QUOC CUONG@QUOCCUONG MINGW64 ~/projects/website (develop|MERGING)
+$ git mergetool
+
+QUOC CUONG@QUOCCUONG MINGW64 ~/projects/website (develop|MERGING)
+$ git commit -m "resolving conflict with unique approach"
+
+// do not have 'develop|MERGING'
+QUOC CUONG@QUOCCUONG MINGW64 ~/projects/website (develop)
+$ git status
+On branch develop
+Your branch is ahead of 'origin/develop' by 2 commits.
+  (use "git push" to publish your local commits)
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        README.md.orig
+
+nothing added to commit but untracked files present (use "git add" to track)
+
+$ rm *.orig
+
+$ git push
+
+
+================================================
+COMMON
+
+1. checkout master branch
+2. git pull # get all updates from master same as source code, add/delete branches...
+3. merge from other branch
 

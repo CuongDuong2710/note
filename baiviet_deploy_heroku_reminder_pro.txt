@@ -1,0 +1,8 @@
+Rãnh rãnh ngồi nghiên cứu ReactJS và làm một cái app nhắc nhở to-do list. Cường có deploy lên heroku. Mọi người ai thích vọc thì vọc thử cho vui hen.
+Chức năng gồm có:
+
+🍁 Khung nhập nội dung
+🍁 Chọn ngày giờ
+🍁 'Add Reminder': button nhập to-do list
+🍁 'Clear Reminders': xóa hết các ghi chú
+🍁 Danh sách việc cần làm và thời gian là bao lâu.

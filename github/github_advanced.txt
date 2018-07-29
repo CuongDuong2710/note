@@ -45,7 +45,7 @@ $ git difftool 65c57f7 HEAD
 $ git help diff
 
 ****************************************************************
-32. Simple branching example
+32. Simple branching example - FAST-FORWARD
 
 // show all branch
 $ git branch
@@ -246,7 +246,7 @@ $ git commit -am "updating ignore to exclude merge files"
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 ****************************************************************
-34. Marking Special Events with Tagging
+34. Marking Special Events with Tagging - note major milestones or associate some information
 
 // Have two tags: lightweight tag, annotated tag
 
@@ -363,7 +363,7 @@ $ git commit -am "Updating readme again"
 
 
 ****************************************************************
-35. Time travel with Reset and Reflog
+36. Time travel with Reset and Reflog
 
 
 $ git hist
@@ -386,7 +386,7 @@ $ git hist
 * 414a21c adding both a README and a LICENSE file to the repo
 
 // 3 ways to reset: soft, mixed, hard
-***// HEAD to '9da033a' by soft reset. Soft reset is the least destructive of them all
+***// HEAD to '9da033a' by soft reset. Soft reset is the least destructive of them all. All it does is change where HEAD is pointing, still "Changes to be committed:"
 $ git reset 9da033a --soft
 
 $ git hist
@@ -406,7 +406,7 @@ $ git hist
 * 65c57f7 Updating README
 * 414a21c adding both a README and a LICENSE file to the repo
 
-***// mixed reset
+***// mixed reset - default "Unstaged changes after reset:"
 $ git reset 030099c --mixed
 Unstaged changes after reset:
 M       .gitignore
@@ -432,7 +432,7 @@ $ git hist
 * 414a21c adding both a README and a LICENSE file to the repo
 
 
-***// hard reset. This is the most destructive of all the reset modes
+***// hard reset. This is the most destructive of all the reset modes, wiped out all any changes
 $ git reset 65c57f7 --hard
 HEAD is now at 65c57f7 Updating README
 
@@ -498,21 +498,6 @@ HEAD is now at 17e6ee1 Updating readme again
 $ git log --oneline
 
 *** using 'reset' + 'reflog' really does provide you full control
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 This is first demo github

@@ -99,7 +99,7 @@ Unpacking objects: 100% (3/3), done.
 From github.com:CuongDuong2710/my-website
    fc80526..eaa2e31  master     -> origin/master
 
-// diverged: phân tách
+// diverged: phân tách, khác nhau
 // That we have one commit that's different on each side
 // And it recommends that we use 'git pull' to automatically merge our remote branch
 $ git status
@@ -110,7 +110,7 @@ and have 1 and 1 different commits each, respectively.
 nothing to commit, working tree clean
 
 
-***// Sice the master branch on both sides were different, what's occuring is a merge commit MERGE_MSG. That's safe to merge
+***// Sice the master branch on both sides were different, what's occuring is a merge commit MERGE_MSG. That's safe to merge and there's no conflict
 $ git pull
 Merge made by the 'recursive' strategy.
  index.html | 2 +-
@@ -154,6 +154,13 @@ $ git remote show origin
     master merges with remote master
   Local ref configured for 'git push':
     master pushes to master (up to date)
+	
+// If not set-url, notification move new location. But remote repository still updates new changes from local
+remote: This repository moved. Please use the new location:
+remote:   git@github.com:CuongDuong2710/website.git
+To github.com:CuongDuong2710/my_website.git
+   90f4583..0115e0e  master -> master
+
 	
 ================================================
 62. Synchronizing  our Changes with our Local Repository

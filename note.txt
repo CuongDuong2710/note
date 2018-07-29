@@ -1,0 +1,20 @@
+TJ Holowaychuk
+
+"I spend most of my time enjoying other things now, I write code 2–3 hours a day unless I’m really into something. Time is your real currency!
+Money is nice and all but don’t waste your time. If you really enjoy the project(s) you’re working on then go for it but don’t neglect other areas of your life (or people)."
+
+"I think my best days have 0 lines of code haha. Sitting in a cafe with a notepad is sometimes the best way to approach a problem. 
+Code is just a means to an end, how much you write means nothing, I would argue the more you write, the more you’re doing something wrong."
+
+"What are some reasons programmers quit their high paying jobs?
+TJ Holowaychuk
+TJ Holowaychuk, works at Apex Software
+Answered Jan 18
+After you have a pretty crazy amount of money for a while, you start to slowly realize it doesn’t mean a whole lot. Time and doing (or working on) things you care about is a lot more important, and variety is healthy, if you’re interested in other forms of art, sports, whatever. Doing one thing, all day, every day, is not.
+
+I make a tiny fraction of what I made running my own stuff, but the freedom would be impossible to match at a company or startup. Also it’s kind of fun having an “open ended” opportunity. Sure you might not make much at the beginning, but if you hang in there who knows, maybe it can match or surpass what you had before.
+
+Once you taste the sweet sweet freedom, you’ll never want to go back."
+
+Stephen Grider
+"But I've found that learning more than one language is a great way to gain real mastery of software engineering"

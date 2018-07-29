@@ -1,0 +1,579 @@
+inception
+elaboration
+construction
+transition
+
+====================================================================================
+OOD video 3
+
+Welcome to my 3rd tutorial on Object Oriented Design. In this part of the tutorial, I'll cover Iterative Development, The Unified Process and Usage Cases.
+
+Unlike the waterfall process for object design, with the iterative process programming starts before all of the requirements are expected. 
+The Unified Process is a popular IDP which focuses on high risk / value parts first before creating full requirements for the program.
+
+====================================================================================
+Part 1: Inception
+
+Use Case: Provide ATM user with money from checking account
+
+Scope: ATM Software Application
+
+Level: User Goal
+
+Primary Actor: Bank Customer
+ 
+Stakeholders and Interests
+
+1. Bank Customer:
+
+    a. Access to all the funds in both their savings and checking
+
+    b. Deposit checks
+
+    c. Check their balance while making sure their money is safe
+
+    d. Receive a receipt
+     
+2. ATM:
+
+    a. Provide funds available to customers
+
+    b. Automatically update fund changes immediately
+
+    c. Protect the bank and customers from false cards and PINs
+
+    d. Monitor ATM activity via photos
+
+    e. Verify all checks deposited
+
+    f. Stay updated with home system in regards to changes in balances
+
+    g. Provide a receipt after each transaction
+
+    h. Shut down ATM if it no longer has enough funds on hand
+
+    i. Report any oddities that may cause the home computer to shut it down
+
+        i. Out of paper, dead key, cracked screen
+
+3. Bank Home Office Computer:
+
+    a. Provide accurate account funds information
+
+    b. Update immediately when a transaction occurs system wide
+
+    c. Decide to destroy card based on possible fraud
+
+    d. Save photos taken
+
+    e. Save a backup of all photos of checks
+
+    f. Decide if machine should be shutdown and do so
+
+    g. Decide if a technician needs to be sent to repair ATM
+
+    h. Verify funds available in other banks if the user doesn't have an
+
+        account with this bank ATM
+
+
+4. Fraud Department:
+
+    a. If sent card information they will verify if a card is stolen
+
+ Preconditions
+
+    a. A valid card is entered
+
+    b. A valid PIN is entered that matches with the card
+
+ Postconditions
+
+    a. Customer is happy with the transaction
+
+    b. The transaction is disseminated to all bank systems
+
+    c. A photo of the customer is taken
+
+    d. Receipt is generated
+
+    e. Card is provided back to the customer
+
+ Main Success Scenario
+
+1. The ATM displays a message on screen identifying itself to customers
+
+2. The customer inserts their card
+
+3. The ATM verifies the legitimacy of the card
+
+4. The Home Banking Office verifies the legitimacy of the card
+
+5. The ATM takes a photo of the customer
+
+5. The ATM requests that the customer enter their PIN
+
+6. The ATM verifies the legitimacy of the PIN
+
+7. The ATM asks the customer whether they want to remove funds or
+
+    make a deposit
+
+8. If the customer requests to remove funds the ATM asks if funds
+
+    should be removed from checking or savings
+
+9. Customer decides which account to remove funds from
+
+10. The ATM asks the customer how much money to remove from the checking account
+
+11. The customer enters the amount to remove
+
+12. The ATM contacts the home office to verify if funds are available
+
+13. The Home Office locks down the account from other transactions
+
+14. The ATM informs the customer that a transaction is being processed
+
+16. The ATM provides the specified funds to the user
+
+17. The ATM asks the customer if they would like another transaction
+
+18. The ATM repeats steps 8 thru 17 until the customer is finished
+
+19. The Home Office is informed of the transaction
+
+20. The customer receives a receipt
+
+21. The customer receives their card
+
+22. The ATM displays its welcome message for the next customer
+
+Noun
+
+1. ATM
+2. Customer
+3. Account
+4. Bank Computer
+5. Bank Network
+6. Card
+7. Transaction
+
+Extensions
+ 
+
+*a. At any time if the ATM runs out of funds
+
+    1. Display a closed message
+
+    2. Shut down the machine
+
+    3. Send a message that a technician needs to fill the ATM with funds
+
+*b. At any time if the ATM runs out of receipt paper
+
+    1. Display a closed message
+
+    2. Shut down the machine
+
+    3. Send a message that a technician needs to fill the ATM with receipt paper
+
+*c. At any time if the machine is damaged
+
+    1. Display a closed message
+
+    2. Shut down the machine
+
+    3. Send a message that a technician needs to fix the machine
+
+3a. The card is from another bank
+
+    1. Connect to the other bank to verify funds
+
+        a. The other bank isn't reachable
+
+            1. Inform the customer that a transaction can't be made
+
+            2. Provide the customer with their card
+
+            3. End the transaction
+
+        b. The other bank is reachable
+
+            1. If the customer must pay a fee inform them of that
+
+                i. Receive verification that the customer understands any fees
+
+                    1. Add the fee as part of the transaction if customer allows
+
+                    2. If customer declines record that and provide the customer
+
+                        with their card and a receipt
+
+3b. The card is not valid for this ATM or any other partner banks
+
+    1. Contact fraud department to see if the card is stolen
+
+        a. If the card is stolen
+
+            1. Confiscate the card
+
+            2. Take photo of the person using the ATM
+
+            3. Contact local law enforcement
+
+        b. If the card doesn't come up as stolen
+
+            1. Inform the customer that a transaction can't be completed
+
+            2. Provide the customer with their card
+
+            3. Update the home office computer with the failed transaction
+
+            4. Provide a receipt to the customer
+
+             
+
+6a. The PIN is different from the PIN on file at the bank the card matched for
+
+    1. Ask the customer to re-enter their PIN (Repeat 3 Times)
+
+    2. Contact the fraud department to check if the card is stolen
+
+        a. If card is stolen
+
+            1. Confiscate the card
+
+            2. Take photo of the person using the ATM
+
+            3. Contact local law enforcement
+
+        b. If the card isn't stolen
+
+            1. Inform the customer that a transaction can't be completed
+
+            2. Provide the customer with their card
+
+            3. Update the home office computer with the failed transaction
+
+            4. Provide a receipt to the customer
+
+12a. If the funds aren't available, ask customer if they want funds from other account
+
+    1. If they say yes, ask what account to check
+
+    2. If funds aren't available repeat 12a
+
+    3. If funds are available
+
+        a. Inform ATM to process the transaction
+
+        b. Mark the transaction in the home bank office
+
+Special Requirements
+
+1. The text must be readable by color blind people
+
+2. The text must be readable by people who speak other languages
+
+3. The text must be readable from 3 feet away from the screen
+
+4. The keypad buttons must include braille
+
+Data Variations List
+
+1. All data uses 256-bit AES Encryption
+
+Frequency Occurrence
+
+Could be constantly
+
+Miscellaneous
+
+1. Is there anything we can do to improve user experience for the blind?
+
+2. Can polarized screens help improve security?
+
+
+====================================================================================
+OOD video 4
+
+Get the Diagrams: http://goo.gl/eGk21
+
+Welcome to the 4th part of my Object Oriented Design tutorial. I show you how to plan your first iteration. I explain all of the parts of the Elaboration phase of Object Oriented Design.
+
+Then I take the Usage Case I made in part 3 of this tutorial, and convert it into a Domain Model. I cover all of the following: conceptual classes, how to build domain models, turning nouns into classes, associations and how to tell an attribute from a class.
+
+This is a big tutorial, but the diagram linked to above will help you learn this stuff.
+
+
+====================================================================================
+OOD video 7
+
+Class & Sequence Diagrams Here: http://goo.gl/uZ3xG
+
+In previous tutorials I showed you how to make a sequence diagram. In this video, I'll show you how to convert a Sequence Diagram into a Class Diagram. You should watch the tutorials on making sequence diagrams if you missed them.
+
+In this tutorial, I wanted to show step-by-step how sequence diagrams are turned into class diagrams. Then in the next video, I'll turn them both into working code in about 10 minutes.
+
+
+---------------------------------
+
+:Account
+
+---------------------------------
+
+- bankID:int
+
+- acctNumber:int
+
+- customerName:String
+
+- acctType:String
+
+- acctBalance:double
+
+- pin:int
+
+- stripNumber:int
+
+
+- accountNumberIncrementor:int = 100000 (STATIC)
+
+---------------------------------
+
++ Account(bankID:int, customerName:String, acctType:String, acctBalance:double, pint:int)
+
+ 
+
++ getBankID():int
+
++ getAcctNumber():int
+
++ getCustomerName():String
+
++ getAcctType():String
+
++ getAcctBalance():double
+
++ setAcctBalance(newAcctBalance:double):void
+
++ getPIN():int
+
++ getStripNumber():int
+
+ 
+
++ generateStripNumber(bankID):int
+
++ generateAccountNumber(stripNumber:int, acctType:String)
+
+ooooooooooooooooooooooooooooooooo
+
+---------------------------------
+
+:Card
+
+---------------------------------
+
+- pin:int
+
+- stripNumber:int
+
+---------------------------------
+
++ Card(stripNumber:int):void
+
++ Card(pin:int,stripNumber):void
+
++ getPIN():int
+
++ getStripNumber():int
+
++ setPIN(pin:int):void
+
++ setStripNumber(stripNumber:int):void
+
+---------------------------------
+
+ooooooooooooooooooooooooooooooooo
+
+---------------------------------
+
+:Customer
+
+---------------------------------
+
+- customersATMCard:Card
+
+---------------------------------
+
++ Customer(newATMCard:Card):void
+
++ getATMCard():Card
+
+---------------------------------
+
+ooooooooooooooooooooooooooooooooo
+
+
+---------------------------------
+
+:BankComputer
+
+---------------------------------
+
+- bankID:int = 9
+
+- bankName:String
+
+- accounts:ArrayList<Account>
+
+ 
+
++ numberOfBanks:int = 0 (STATIC)
+
+---------------------------------
+
++ BankComputer(String newBankName):void
+
++ addAcctToBank(newAccount:Account):void
+
++ getBankID():int
+
++ verifyTheStripNumber(theCard:Card):boolean
+
++ verifyThePIN(theTransaction:Transaction):boolean
+
++ requestWithdrawalAmt(theTransaction:Transaction):void
+
+---------------------------------
+
+ooooooooooooooooooooooooooooooooo
+
+---------------------------------
+
+:BankNetwork
+
+---------------------------------
+
+- banksInDatabase:ArrayList<BankComputer>
+
+---------------------------------
+
++ addBankToNetwork(newBank:BankComputer):void
+
++ isATMCardsBankInNetwork(theCard:Card):boolean
+
++ getFirstTwoDigits(stripNumber:int):int (STATIC)
+
++ verifyThePIN(theTransaction:Transaction):boolean
+
++ requestWithdrawalAmt(theTransaction:Transaction):void
+
+---------------------------------
+
+ooooooooooooooooooooooooooooooooo
+
+---------------------------------
+
+:ATM
+
+---------------------------------
+
+- theTransaction:Transaction
+
+- networkOfBanksOnATM:BankNetwork
+
++ userInput:Scanner (STATIC)
+
+---------------------------------
+
++ ATM(networkOfBanksOnATM:BankNetwork)
+
++ isStripReadable(theCard:Card):boolean
+
++ isATMCardsBankInNetwork(theCard:Card):boolean
+
++ insertPIN(theCard:Card, pin:int):boolean
+
++ pickAcctToAccess():void
+
++ amountToWithdrawal():void
+
++ getTransactionInfo():void
+
+ 
+
+---------------------------------
+
+ooooooooooooooooooooooooooooooooo
+
+---------------------------------
+
+:Transaction
+
+---------------------------------
+
+- bankID:int
+
+- currentDateTime:Date
+
+- customerName:String
+
+- acctBalance:double
+
+- withdrawalAmt:int
+
+- acctNumberUsed:int
+
+- pin:int
+
+- stripNumber:int
+
+- acctToWithdrawalFrom:int
+
+- didCardVerify:boolean
+
+ 
+
+---------------------------------
+
++ Transaction(stripNumber:int)
+
++ getBankID():int
+
++ getCustomerName():String
+
++ setCustomerName(customerName:String):void
+
++ getCurrentDateTime():String
+
++ getPIN():int
+
++ setPIN(pin:int)
+
++ setStripNumber(stripNumber:int)
+
++ getStripNumber():int
+
++ setDidTheCardVerify(cardVerified:boolean):void
+
++ getDidCardVerify():boolean
+
++ setAcctToWithdrawalFrom(acctToWithdrawalFrom:int):void
+
++ getAcctToWithdrawalFrom():int
+
++ setWithdrawalAmt(withdrawalAmt:int):void
+
++ getWithdrawalAmt():int
+
++ getAccountNumberUsed():int
+
++ setAcctBalance(newAcctBalance:double):void
+
++ getAcctBalance():double
+
+---------------------------------
+

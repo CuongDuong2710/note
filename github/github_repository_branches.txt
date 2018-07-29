@@ -24,6 +24,7 @@ $ git status
 On branch remove-ipsum
 nothing to commit, working tree clean
 
+// <-u>: which is going to set up a tracking branch relationship between the 'remove-ipsum' branch on the local repository
 $ git push -u origin remove-ipsum
 Counting objects: 2, done.
 Delta compression using up to 32 threads.
@@ -35,8 +36,19 @@ To github.com:CuongDuong2710/website.git
  * [new branch]      remove-ipsum -> remove-ipsum
 Branch remove-ipsum set up to track remote branch remove-ipsum from origin.
 
+* NOTE: if type 'git push', no options
+
+$ git push
+fatal: The current branch remove-ipsum has no upstream branch.
+To push the current branch and set the remote as upstream, use
+
+    git push --set-upstream origin remove-ipsum
+
+
 ================================================
-71. Merging locally
+71. Merging locally - 
+
+* NOTE: pull with remote repository before merge other branches in local repository
 
 // check status 'remove-ipsum' branch
 $ git status
@@ -64,7 +76,7 @@ Merge made by the 'recursive' strategy.
 // check status
  $ git status
 On branch master
-Your branch is ahead of 'origin/master' by 2 commits.
+Your branch is ahead of 'origin/master' by 2 commits. // remove 'lipsum.txt' & merge 'remove-ipsum' branch back into 'master' branch
   (use "git push" to publish your local commits)
 nothing to commit, working tree clean
 
@@ -82,7 +94,10 @@ To github.com:CuongDuong2710/website.git
 
 // swith to 'remove-ipsum' branch in Github
 // This branch is 3 commits behind master. Because this branch doesn't have the changes from the example branch that was integrated into master already
-// remove this branch
+// and it doesn't have the merge commits associated with merging back into master
+
+// remove this branch -> enter tab '<number> branches'. When delete, GitHub have 'restore' button. If we reload web, 'restore' button is not visible.
+
 
 // in local, 'remove-ipsum' branch is sill longer
 QUOC CUONG@QUOCCUONG MINGW64 ~/projects/website (master)
@@ -111,7 +126,8 @@ $ git fetch -p
 From github.com:CuongDuong2710/website
  - [deleted]         (none)     -> origin/remove-ipsum
  
- 
+// The 'remove-ipsum' branch is no longer locally referenced or pointing to our remote
+
 ================================================
 72. Locally switch to a Branch on Github
 
@@ -144,7 +160,7 @@ $ git branch -a
   remotes/origin/master
   remotes/origin/update-readme
 
-// Although at local, 'update-readme' doesn't create. Git will search on Github and create.
+// Although at local, 'update-readme' doesn't create. Git will search on Github and create. It will look for the name of that brach among the remotes.
 $ git checkout update-readme
 Switched to a new branch 'update-readme'
 Branch update-readme set up to track remote branch update-readme from origin.
@@ -178,19 +194,20 @@ $ git branch -a
   remotes/origin/update-readme
 
 // delete 'update-readme' branch at Github <origin :update-readme> not use <-p> prune option
+// ':' is telling GitHub to delete whatever the name is of the branch after the colon
 $ git push origin :update-readme
 To github.com:CuongDuong2710/website.git
  - [deleted]         update-readme
  
 ================================================
-74. Pull with Rebase
+*** IMPORTANT - 74. Pull with Rebase
 
 // This is a good strategy when you're working on something, and you want to make sure that your changes are ahead of whatever's going on from the remote site.
 
 // First, edit 'README.md' in remote Github and commit
 +++ "Updates made on master on GitHub before rebase"
 
-// then modify index.html in local
+// Before pull any changes from Github, modify index.html in local
 $ notepad index.html
 
 $ git commit -am "Updating index.html locally before rebase"
@@ -239,7 +256,7 @@ git pull --rebase
 First, rewinding head to replay your work on top of it...
 Applying: Updating index.html locally before rebase
 
-// check it out
+// check it out, rebase make commit on GitHub followed by commit on local. That means on local has updated changes from GitHub. But on GitHub doesn't update changes from local.
 $ git hist
 * 3c62eaf (HEAD -> master) Updating index.html locally before rebase
 * e2eee1c (origin/master, origin/HEAD) Readme updated on master on GitHub befor Rebase

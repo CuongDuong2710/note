@@ -1,0 +1,83 @@
+_ Qua Tết hãy chuyển công ty để nhận tháng lương 13.
+_ Hỏi kỹ lương tháng 13 là 1 tháng lương hay 80%?
+
+==========================
+FREELANCE
+
+làm freelnace, làm nhiêu mình ăn hết
+
+còn cty
+
+thì họ còn phải:
+- đóng thuế
+- tiền lời
+- tiền lời để đầu tư
+- tiền nuôi các bộ phận support không trực iếp tao  ra tiền
+_ tiền vận hành công ty
+
+1001 chi phí
+1/2 đã là nhiều
+nguyên tắc căn bản:
+Tui trả anh 1 đồng, thì anh phải đem về ít nhất 3 đồng
+
+==========================
+
+BẠN SẼ LÀM GÌ?
+- Tham gia vào các dự án phần mềm với những doanh nghiệp hàng đầu Nhật Bản.
+- Xây dụng các apps trên Android, tìm hiểu các công nghệ mới.
+- Tham gia vào thiết kế và review source code.
+- Báo cáo tiến độ và tình trạng công việc trực tiếp tới quản lý dự án.
+- Tiếp cận và được đào tạo theo mô hình phát triển dự án Agile, Scrum.
+YÊU CẦU CHUYÊN MÔN
+- Ít nhất 3 năm kinh nghiệm làm việc với Android, thành thạo việc sử dụng IDE để phát triển (Eclipse, Android Studio)
+- Nắm vững OOP và các giải thuật cơ bản: tìm kiếm
+- Nắm được thông tin các phiên bản android gần đây từ version 4.0 tới hiện tại (những sự kiện chính, những kỹ thuật mới)
+- Biết và sử dụng được các design pattern của android (adapter, singleton)
+- Có hiểu biết về server
+- Có khả năng thiết kế hệ thống (flow design, detail design, sequence diagram design)
+- Có khả năng đọc hiểu nắm bắt flow dự án và nắm bắt code của người khác nhanh.
+
+
+http://iem.cool/portfolio/android-technical-leader/
+
+Android Technical Leader @ Japanese Company
+
+Job Details
+
+Làm việc trên các hệ thống tích hợp theo yêu cầu khách hàng.
+Cộng tác, làm việc với quản lý dự án và các thành viên trong nhóm để đưa ra các phân tích, thiết kế và xây dựng các phần trong ứng dụng.
+Báo cáo với Quản lý dự án để chủ động đánh giá công việc, đề xuất cải tiến.
+Quản lý, phát triển hoặc tích hợp các ứng dụng phần mềm.
+Phối hợp chặt chẽ với các đội ngũ phần mềm cùng công ty và khách hàng để hỗ trợ họ phát triển và phân phối các dự án theo yêu cầu.
+ 
+
+Job Requirements
+
+Ít nhất 2,5 năm kinh nghiệm trong việc phát triển ứng dụng Android, nắm vững Android SDK, Java.
+Có kiến thức tốt về Object-Oriented Design, Data Structures, Algorithm Design, Problem Solving, Design Patterns.
+Có kiến thức tốt về Web service, REST APIs, Oauth 2.0. Ứng dụng giao tiếp dạng client-server.
+Có kinh nghiệm làm việc với web service, JSON/XML.
+Có kinh nghiệm trong việc xây dựng một ứng dụng Android app từ đầu đến lúc kết thúc.
+Có ứng dụng trên Google Play là một lợi thế.
+Đã làm về Gmap hay hệ thống tương tự là một lợi thế
+Có kinh nghiệm làm UI
+Có kinh nghiệm đưa ứng dụng lên Google Play.
+Ưu tiên có kinh nghiệm làm việc với các khách hàng Nhật Bản.
+Sử dụng thành thạo các source control như SVN, Git (GitHub).
+Khả năng tự học cao, có kiến thức về các hệ thống mã nguồn mở, tối ưu hóa tốt.
+Khả năng đọc hiểu tài liệu tiếng Anh tốt.
+Benefits
+
+Khám sức khỏe định kỳ cho toàn thể CBNV công ty.
+Chế độ thai sản hợp lý, đặc biệt có chế độ riêng với bà mẹ và ông bố có con nhỏ.
+Du lịch hàng năm với các điểm đến thật hấp dẫn.
+Tham gia các party sinh nhật tháng, các event sôi động như haloween, party end year, noel …
+Cơ hội thăng tiến hấp dẫn.
+Môi trường làm việc thân thiện, năng động, đa dạng và thăng tiến.
+Chế độ lương thưởng hấp dẫn: lương tháng 13, thưởng các ngày lễ tết, thưởng dự án, doanh thu.
+Kỳ xét tăng lương: 3 lần/năm.
+Được training những kỹ thuật mới & khó khi bắt đầu tham gia làm việc tại công ty.
+Cơ hội làm việc trực tiếp với kỹ sư Nhật Bản và được học hỏi cách làm việc chuyên nghiệp sản xuất sản phẩm chất lượng cao của Nhật Bản.
+Thời gian làm việc: 5 ngày/ tuần
+Mọi qui định của công ty đều tuân theo luật lao động Việt Nam.
+Anh/Chị vui lòng apply bằng form bên dưới. Vui lòng đề cập đến mức lương mong muốn và thời gian có thể bắt đầu công việc mới trong Resume. Tú sẽ liên hệ với Anh/ Chị trong 24h!

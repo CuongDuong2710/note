@@ -1,0 +1,23 @@
+Khi làm ứng dụng StoryBeBi dành cho IOS📱Cường gặp hai khó khăn lớn nhất:
+
+🏀Không có máy MAC💻để code thuần ngôn ngữ Objective C hoặc Swift dành cho IOS.
+
+🏀Không có tài khoản developer Apple (đóng tới 99$/năm😂)để publish lên App store📲🌍
+
+Trong khi đó, tài khoản developer Android chỉ có 22$ mà được xài cả đời🌍
+
+Vậy phải làm sao để app của mình đến với công chúng? Thật là nan giải😨Nhưng Cường quyết không bỏ cuộc và tự mày mò tìm đến công nghệ mới🔎💻 Và Cường đã tìm ra cách giải quyết:
+
+🏀 Không có máy MAC thì Cường viết bằng ES6 với ReactNative với hệ điều hành Windows.
+
+🏀 Không publish lên app store thì publish bằng Expo.
+
+Cách làm:
+🍔Lên app store tải "Expo"
+🍔Scan barcode với hình bên dưới hoặc vào link https://expo.io/@cuongduong2710/storybebi
+
+Ngay lập tức app StoryBeBi sẽ được cài vào điện thoại IOS của bạn🎼📲
+
+Vì đây là bản chưa hoàn thiện và còn nhiều thiếu sót nên Cường rất mong cả nhà có thời gian rãnh tải về🌎📲 xài thử và gửi phản hồi 📪giúp Cường.
+
+Cám ơn cả nhà rất nhiều! 😘😘Chúc cả nhà cuối tuần vui vẻ!🚴🚴
